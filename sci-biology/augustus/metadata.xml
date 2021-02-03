@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>joel@generisbio.com</email>
+		<name>Joel Berendzen</name>
+	</maintainer>
+	<use>
+		<flag name="man">Build man pages</flag>
+	</use>
+</pkgmetadata>

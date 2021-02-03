@@ -1,0 +1,63 @@
+diff --git a/setup.py b/setup.py
+index 07b500d..3cc8979 100644
+--- a/setup.py
++++ b/setup.py
+@@ -37,33 +37,33 @@ package_data = \
+ {'': ['*'], 'poetry': ['_vendor/*'], 'poetry.json': ['schemas/*']}
+ 
+ install_requires = \
+-['cachecontrol[filecache]>=0.12.4,<0.13.0',
+- 'cachy>=0.3.0,<0.4.0',
+- 'cleo>=0.8.1,<0.9.0',
+- 'clikit>=0.6.2,<0.7.0',
+- 'html5lib>=1.0,<2.0',
+- 'packaging>=20.4,<21.0',
+- 'pexpect>=4.7.0,<5.0.0',
+- 'pkginfo>=1.4,<2.0',
+- 'poetry-core>=1.0.0,<2.0.0',
+- 'requests-toolbelt>=0.9.1,<0.10.0',
+- 'requests>=2.18,<3.0',
+- 'shellingham>=1.1,<2.0',
+- 'tomlkit>=0.7.0,<1.0.0',
+- 'virtualenv>=20.0.26,<21.0.0']
++['cachecontrol[filecache]>=0.12.4',
++ 'cachy>=0.3.0',
++ 'cleo>=0.8.1',
++ 'clikit>=0.6.2',
++ 'html5lib>=1.0',
++ 'packaging>=20.4',
++ 'pexpect>=4.7.0',
++ 'pkginfo>=1.4',
++ 'poetry-core>=1.0.0',
++ 'requests-toolbelt>=0.9.1',
++ 'requests>=2.18',
++ 'shellingham>=1.1',
++ 'tomlkit>=0.7.0',
++ 'virtualenv>=20.0.26']
+ 
+ extras_require = \
+-{':python_version < "3.8"': ['importlib-metadata>=1.6.0,<2.0.0'],
+- ':python_version >= "2.7" and python_version < "2.8"': ['typing>=3.6,<4.0',
+-                                                         'pathlib2>=2.3,<3.0',
+-                                                         'futures>=3.3.0,<4.0.0',
+-                                                         'glob2>=0.6,<0.7',
+-                                                         'functools32>=3.2.3,<4.0.0',
+-                                                         'keyring>=18.0.1,<19.0.0',
+-                                                         'subprocess32>=3.5,<4.0'],
+- ':python_version >= "3.5" and python_version < "3.6"': ['keyring>=20.0.1,<21.0.0'],
+- ':python_version >= "3.6" and python_version < "4.0"': ['crashtest>=0.3.0,<0.4.0',
+-                                                         'keyring>=21.2.0,<22.0.0']}
++{':python_version < "3.8"': ['importlib-metadata>=1.6.0'],
++ ':python_version >= "2.7" and python_version < "2.8"': ['typing>=3.6',
++                                                         'pathlib2>=2.3',
++                                                         'futures>=3.3.0',
++                                                         'glob2>=0.6',
++                                                         'functools32>=3.2.3',
++                                                         'keyring>=18.0.1',
++                                                         'subprocess32>=3.5'],
++ ':python_version >= "3.5" and python_version < "3.6"': ['keyring>=20.0.1'],
++ ':python_version >= "3.6" and python_version < "4.0"': ['crashtest>=0.3.0',
++                                                         'keyring>=21.2.0']}
+ 
+ entry_points = \
+ {'console_scripts': ['poetry = poetry.console:main']}

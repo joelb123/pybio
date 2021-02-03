@@ -1,0 +1,2 @@
+#!/bin/bash
+(LC_All=C sort --buffer-size=2G -t $'\t' "$@")

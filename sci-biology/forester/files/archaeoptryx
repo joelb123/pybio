@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Wrapper script for Archaeoptryx executable that checks for a config file
+# under ~/.aptx/_aptx_configuration_file.txt before launching.
+#
+# Usage:
+#   archaeoptryx [path to phyloxml file]
+#
+if [ -e ~/.aptx/_aptx_configuration_file.txt ]; then
+  config="-c ~/.aptx/_aptx_configuration_file.txt"
+else 
+  config="-c /usr/share/forester/lib/_aptx_configuration_file.txt"
+fi
+java -Xmx2048m -cp /usr/share/forester/lib/forester.jar org.forester.archaeopteryx.Archaeopteryx ${config} $@

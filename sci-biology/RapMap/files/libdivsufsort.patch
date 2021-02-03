@@ -1,0 +1,40 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index cd89a48..25a8d3c 100755
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -215,20 +215,6 @@ if (NOT ZLIB_FOUND)
+ endif()
+ 
+ 
+-message("Build system will build libdivsufsort")
+-message("==================================================================")
+-include(ExternalProject)
+-ExternalProject_Add(libdivsufsort
+-    DOWNLOAD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external
+-    URL ${CMAKE_CURRENT_SOURCE_DIR}/external/libdivsufsort.tar.gz
+-    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/libdivsufsort-master
+-    INSTALL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/install
+-    UPDATE_COMMAND sh -c "mkdir -p <SOURCE_DIR>/build"
+-    BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/libdivsufsort-master/build
+-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DBUILD_DIVSUFSORT64=TRUE -DUSE_OPENMP=TRUE -DBUILD_SHARED_LIBS=FALSE
+-)
+-set(SUFFARRAY_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/install/include)
+-
+ if (NOT CEREAL_ROOT)
+ 	set(CEREAL_ROOT ${GAT_SOURCE_DIR}/external/install)
+ endif()
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 778706e..48adfc6 100755
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -63,8 +63,8 @@ endif()
+ add_executable(rapmap ${RAPMAP_MAIN_SRCS})
+ 
+ # our suffix array construction libraries
+-set (SUFFARRAY_LIB ${GAT_SOURCE_DIR}/external/install/lib/libdivsufsort.a)
+-set (SUFFARRAY64_LIB ${GAT_SOURCE_DIR}/external/install/lib/libdivsufsort64.a)
++set (SUFFARRAY_LIB /usr/lib64/libdivsufsort.so)
++set (SUFFARRAY64_LIB /usr/lib64/libdivsufsort64.so)
+ 
+ # build KSW2 library
+ set (KSW2PP_BASIC_LIB_SRCS

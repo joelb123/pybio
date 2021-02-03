@@ -1,0 +1,81 @@
+diff --git a/Java_XY_plotter/run_XYplot.pl b/Java_XY_plotter/run_XYplot.pl
+index 6c104ea..f17320d 100755
+--- a/Java_XY_plotter/run_XYplot.pl
++++ b/Java_XY_plotter/run_XYplot.pl
+@@ -2,7 +2,7 @@
+ 
+ use strict;
+ 
+-my $libPath = $0;
++my $libPath = /usr/share/dagchainer/lib/;
+ $libPath =~ s/[^\/]+$//;
+ $libPath .= "lib";
+ 
+diff --git a/Makefile b/Makefile
+index 014b629..c538f1f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,8 +1,8 @@
+ 
+-PROG=dagchainer.${HOSTTYPE}
++PROG=dagchainer
+ 
+ 
+ ${PROG} : dagchainer.cpp
+-	g++ -o ${PROG} dagchainer.cpp -Wno-deprecated
+-
++	c++ -O3 -march=native -o ${PROG} dagchainer.cpp -std=c++98
++	strip ${PROG}
+ 
+diff --git a/dagchainer.cpp b/dagchainer.cpp
+index 7a03c50..34a4e53 100644
+--- a/dagchainer.cpp
++++ b/dagchainer.cpp
+@@ -9,19 +9,20 @@
+ 
+ #include  <stdio.h>
+ #include  <stdlib.h>
+-#include  <iostream.h>
+-#include  <iomanip.h>
+-#include  <fstream.h>
++#include  <iostream>
++#include  <iomanip>
++#include  <fstream>
+ #include  <math.h>
+-#include  <string.h>
++#include  <string>
+ #include  <ctype.h>
+-#include  <limits.h>
++#include  <limits>
+ #include  <float.h>
+ #include  <time.h>
+ #include  <assert.h>
+ #include  <errno.h>
+ #include  <vector>
+ #include  <algorithm>
++#include  <string.h>
+ #ifdef __sun__
+ #include <getopt.hh>
+ #else
+diff --git a/run_DAG_chainer.pl b/run_DAG_chainer.pl
+index 8491386..75f24d1 100755
+--- a/run_DAG_chainer.pl
++++ b/run_DAG_chainer.pl
+@@ -129,7 +129,7 @@ main: {
+ 		my $match_list_aref = $mol_pair_to_list{$molpair};
+ 		
+ 		## Create input file to cpp program.
+-		my $filename = "$mol_1.vs.$mol_2.delcher..input";
++		my $filename = "/tmp/$mol_1.vs.$mol_2.delcher.input";
+ 		
+ 		my @pairIndexToAccs;
+ 		open (ART, ">$filename") or die "Can't open file.\n";
+@@ -425,7 +425,7 @@ sub run_DAG_chainer {
+ 	}
+ 	
+     my $tmpFile = ".$$.tmpOut";
+-    my $cmd = "${progpath}dagchainer.$uname -G $GAP_LENGTH -O $GAP_OPEN_PENALTY -E $GAP_EXTENSION_PENALTY -S $MIN_ALIGNMENT_SCORE -D $MAX_DIST_BETWEEN_MATCHES  -F $filename $reverseOrientFlag > $tmpFile";
++    my $cmd = "${progpath}dagchainer -G $GAP_LENGTH -O $GAP_OPEN_PENALTY -E $GAP_EXTENSION_PENALTY -S $MIN_ALIGNMENT_SCORE -D $MAX_DIST_BETWEEN_MATCHES  -F $filename $reverseOrientFlag > $tmpFile";
+     print "CMD: $cmd \n";
+     my $ret = system $cmd;
+     if ($ret) {

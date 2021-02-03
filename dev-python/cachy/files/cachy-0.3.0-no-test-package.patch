@@ -1,0 +1,14 @@
+diff --git a/setup.py b/setup.py
+index 9fb7f2e..c47b714 100644
+--- a/setup.py
++++ b/setup.py
+@@ -6,8 +6,7 @@ packages = \
+  'cachy.contracts',
+  'cachy.serializers',
+  'cachy.stores',
+- 'tests',
+- 'tests.stores']
++ ]
+ 
+ package_data = \
+ {'': ['*']}

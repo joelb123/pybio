@@ -1,0 +1,61 @@
+diff --git a/Makefile b/Makefile
+index 19d7955..f9d32d7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -39,7 +39,6 @@ ifeq ($(CXX), icpc)
+ else ifeq ($(CXX), g++)
+ 	CC=gcc
+ endif		
+-ARCH_FLAGS=	-msse4.1
+ MEM_FLAGS=	-DSAIS=1
+ CPPFLAGS+=	-DENABLE_PREFETCH -DV17=1 $(MEM_FLAGS) 
+ INCLUDES=   -Isrc -Iext/safestringlib/include
+@@ -51,37 +50,6 @@ OBJS=		src/fastmap.o src/bwtindex.o src/utils.o src/memcpy_bwamem.o src/kthread.
+ BWA_LIB=    libbwa.a
+ SAFE_STR_LIB=    ext/safestringlib/libsafestring.a
+ 
+-ifeq ($(arch),sse41)
+-	ARCH_FLAGS=-msse4.1
+-else ifeq ($(arch),sse42)
+-	ARCH_FLAGS=-msse4.2
+-else ifeq ($(arch),avx)
+-	ifeq ($(CXX), icpc)
+-		ARCH_FLAGS=-mavx ##-xAVX
+-	else	
+-		ARCH_FLAGS=-mavx
+-	endif
+-else ifeq ($(arch),avx2)
+-	ifeq ($(CXX), icpc)
+-		ARCH_FLAGS=-march=core-avx2 #-xCORE-AVX2
+-	else	
+-		ARCH_FLAGS=-mavx2
+-	endif
+-else ifeq ($(arch),avx512)
+-	ifeq ($(CXX), icpc)
+-		ARCH_FLAGS=-xCORE-AVX512
+-	else	
+-		ARCH_FLAGS=-mavx512bw
+-	endif
+-else ifeq ($(arch),native)
+-	ARCH_FLAGS=-march=native
+-else ifneq ($(arch),)
+-# To provide a different architecture flag like -march=core-avx2.
+-	ARCH_FLAGS=$(arch)
+-else
+-myall:multi
+-endif
+-
+ CXXFLAGS+=	-g -O3 -fpermissive $(ARCH_FLAGS) #-Wall ##-xSSE2
+ 
+ .PHONY:all clean depend multi
+diff --git a/ext/safestringlib/makefile b/ext/safestringlib/makefile
+index f7cc268..cf3af49 100644
+--- a/ext/safestringlib/makefile
++++ b/ext/safestringlib/makefile
+@@ -64,6 +64,5 @@ ${OTDIR}:
+ .PHONY: clean
+ 
+ clean:
+-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ $(OTDIR)/*.o
+ 	rm -f libsafestring.a
+ 	rm -f safestringtest

@@ -1,0 +1,11 @@
+#!/bin/bash
+docstring="tsv-header -- get names of fields from tab-separated file
+
+Usage: tsv-header FILE"
+if [ "$#" -ne 1 ]; then
+	echo "$docstring"
+	exit 1
+else
+	printf "field\tname\n"
+	head -n 1 "$1" | tr $'\t' $'\n' | nl
+fi

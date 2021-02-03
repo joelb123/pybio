@@ -1,0 +1,11 @@
+diff --git a/ext/safestringlib/makefile b/ext/safestringlib/makefile
+index f7cc268..cf3af49 100644
+--- a/ext/safestringlib/makefile
++++ b/ext/safestringlib/makefile
+@@ -64,6 +64,5 @@ ${OTDIR}:
+ .PHONY: clean
+ 
+ clean:
+-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ $(OTDIR)/*.o
+ 	rm -f libsafestring.a
+ 	rm -f safestringtest

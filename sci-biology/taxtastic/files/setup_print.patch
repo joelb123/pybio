@@ -1,0 +1,23 @@
+--- setup.py.orig	2017-03-27 10:24:55.797654029 -0600
++++ setup.py	2017-03-27 10:29:46.766663644 -0600
+@@ -41,7 +41,7 @@
+         try:
+             import pyflakes.scripts.pyflakes as flakes
+         except ImportError:
+-            print "Audit requires PyFlakes installed in your system."
++            print("Audit requires PyFlakes installed in your system.")
+             sys.exit(-1)
+ 
+         warns = 0
+@@ -53,9 +53,9 @@
+                     if file != '__init__.py' and file.endswith('.py'):
+                         warns += flakes.checkPath(os.path.join(root, file))
+         if warns > 0:
+-            print "Audit finished with total %d warnings." % warns
++            print("Audit finished with total %d warnings." % warns)
+         else:
+-            print "No problems found in sourcecode."
++            print("No problems found in sourcecode.")
+ 
+ 
+ scripts = ['taxit']

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>joel@generisbio.com</email>
+		<name>Joel Berendzen</name>
+	</maintainer>
+	<use>
+		<flag name="dreme"> support MEME</flag>
+		<flag name="lto"> do link-time optimization</flag>
+		<flag name="misc_scripts">provide scripts</flag>
+		<flag name="rmathlib">Undocumented USE</flag>
+	</use>
+</pkgmetadata>

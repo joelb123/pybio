@@ -1,0 +1,20 @@
+--- fasttree-2.1.10/FastTreeUPGMA-2.1.10.c.orig	2017-05-18 12:39:41.387008913 -0600
++++ fasttree-2.1.10/FastTreeUPGMA-2.1.10.c	2017-05-18 12:43:43.339127100 -0600
+@@ -535,7 +535,7 @@
+       break;
+   }
+   if(iArg < argc-1) {
+-    fprintf(stderr, usage);
++    fprintf(stderr, "%s", usage);
+     exit(1);
+   }
+ 
+@@ -953,7 +953,7 @@
+       assert(first >= 0);
+       /* Print the name, or the subtree of duplicate names */
+       if (nameNext[first] == -1) {
+-	fprintf(fp, names[uniqueFirst[node]]);
++	fprintf(fp,"%s",  names[uniqueFirst[node]]);
+       } else {
+ 	fprintf(fp,"(%s:0.0",names[first]);
+ 	int iName = nameNext[first];

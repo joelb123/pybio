@@ -1,0 +1,22 @@
+#!/bin/bash
+docstring="tsv-field -- get field number matching name from header of tsv
+
+Usage: tsv-field NAME FILE"
+if [ "$#" -ne 2 ]; then
+	echo "$docstring"
+	exit 1
+else
+	fields=$(head -n 1 "$2" | tr $'\t' ' ')
+	i=1
+	for field in $fields; do
+		if [ "$1" == "$field" ]; then
+			echo $i
+			exit 0
+		else
+			let i=i+1
+		fi
+	done
+fi
+echo "ERROR--names \"$1\" not found in header of file \"$2\""
+echo "names found are: $fields"
+exit 1
