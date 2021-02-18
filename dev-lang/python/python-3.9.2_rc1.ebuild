@@ -7,9 +7,10 @@ WANT_LIBTOOL="none"
 inherit autotools check-reqs flag-o-matic multiprocessing pax-utils \
 	python-utils-r1 toolchain-funcs verify-sig
 
-MY_P="Python-${PV/_/}"
+MY_PV=${PV/_rc/rc}
+MY_P="Python-${MY_PV%_p*}"
 PYVER=$(ver_cut 1-2)
-PATCHSET="python-gentoo-patches-3.9.1-r1"
+PATCHSET="python-gentoo-patches-${MY_PV}"
 
 DESCRIPTION="An interpreted, interactive, object-oriented programming language"
 HOMEPAGE="https://www.python.org/"
@@ -22,7 +23,7 @@ S="${WORKDIR}/${MY_P}"
 
 LICENSE="PSF-2"
 SLOT="${PYVER}"
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
 IUSE="bluetooth build examples gdbm hardened ipv6 libressl lto +ncurses pgo +readline sqlite +ssl test tk wininst +xml"
 RESTRICT="!test? ( test )"
 

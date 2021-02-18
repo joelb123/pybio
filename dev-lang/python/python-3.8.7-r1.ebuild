@@ -1,10 +1,11 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="7"
 WANT_LIBTOOL="none"
 
-inherit autotools flag-o-matic pax-utils python-utils-r1 toolchain-funcs
+inherit autotools flag-o-matic multiprocessing pax-utils \
+	python-utils-r1 toolchain-funcs verify-sig
 
 MY_P="Python-${PV}"
 PYVER=$(ver_cut 1-2)
@@ -13,12 +14,15 @@ PATCHSET="python-gentoo-patches-3.8.7-r1"
 DESCRIPTION="An interpreted, interactive, object-oriented programming language"
 HOMEPAGE="https://www.python.org/"
 SRC_URI="https://www.python.org/ftp/python/${PV}/${MY_P}.tar.xz
-	https://dev.gentoo.org/~mgorny/dist/python/${PATCHSET}.tar.xz"
+	https://dev.gentoo.org/~mgorny/dist/python/${PATCHSET}.tar.xz
+	verify-sig? (
+		https://www.python.org/ftp/python/${PV%_*}/${MY_P}.tar.xz.asc
+	)"
 S="${WORKDIR}/${MY_P}"
 
 LICENSE="PSF-2"
 SLOT="${PYVER}"
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
+KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc ~x86"
 IUSE="bluetooth build examples gdbm hardened ipv6 libressl lto +ncurses pgo +readline sqlite +ssl test tk wininst +xml"
 RESTRICT="!test? ( test )"
 
@@ -52,11 +56,22 @@ RDEPEND="app-arch/bzip2:=
 # bluetooth requires headers from bluez
 DEPEND="${RDEPEND}
 	bluetooth? ( net-wireless/bluez )
-	test? ( app-arch/xz-utils[extra-filters(+)] )
+	test? ( app-arch/xz-utils[extra-filters(+)] )"
+BDEPEND="
 	virtual/pkgconfig
+	verify-sig? ( app-crypt/openpgp-keys-python )
 	!sys-devel/gcc[libffi(-)]"
+PDEPEND="app-eselect/eselect-python"
 RDEPEND+=" !build? ( app-misc/mime-types )"
-PDEPEND=">=app-eselect/eselect-python-20140125-r1"
+
+VERIFY_SIG_OPENPGP_KEY_PATH=/usr/share/openpgp-keys/python.org.asc
+
+src_unpack() {
+	if use verify-sig; then
+		verify-sig_verify_detached "${DISTDIR}"/${MY_P}.tar.xz{,.asc}
+	fi
+	default
+}
 
 src_prepare() {
 	# Ensure that internal copies of expat, libffi and zlib are not used.
@@ -72,6 +87,12 @@ src_prepare() {
 
 	sed -i -e "s:@@GENTOO_LIBDIR@@:$(get_libdir):g" \
 		setup.py || die "sed failed to replace @@GENTOO_LIBDIR@@"
+
+	# force correct number of jobs
+	# https://bugs.gentoo.org/737660
+	local jobs=$(makeopts_jobs "${MAKEOPTS}" "$(get_nproc)")
+	sed -i -e "s:-j0:-j${jobs}:" Makefile.pre.in || die
+	sed -i -e "/self\.parallel/s:True:${jobs}:" setup.py || die
 
 	eautoreconf
 }
@@ -111,6 +132,11 @@ src_configure() {
 		use hardened && replace-flags -O3 -O2
 	fi
 
+	# https://bugs.gentoo.org/700012
+	if is-flagq -flto || is-flagq '-flto=*'; then
+		append-cflags $(test-flags-CC -ffat-lto-objects)
+	fi
+
 	# Export CXX so it ends up in /usr/lib/python3.X/config/Makefile.
 	tc-export CXX
 
@@ -147,22 +173,29 @@ src_configure() {
 		$(use_with lto)
 	)
 	if use pgo; then
-		myeconfarg+=("enable-optimizations")
+		myeconfarg+=("--enable-optimizations")
 	fi
+
 	OPT="" econf "${myeconfargs[@]}"
+
+	if grep -q "#define POSIX_SEMAPHORES_NOT_ENABLED 1" pyconfig.h; then
+		eerror "configure has detected that the sem_open function is broken."
+		eerror "Please ensure that /dev/shm is mounted as a tmpfs with mode 1777."
+		die "Broken sem_open function (bug 496328)"
+	fi
 }
 
 src_compile() {
 	# Ensure sed works as expected
 	# https://bugs.gentoo.org/594768
 	local -x LC_ALL=C
-
 	if use pgo; then
 		# exclude failing tests and also the longest-running tests
-		emake profile-opt PROFILE_TASK="-m test.regrtest --pgo -uall,-audio -x test_gdb test_multiprocessing test_subprocess test_tokenize test_signal test_faulthandler test_sundry test_curses test_distutils test_imaplib test_import test_asyncio test_compileall test_pyexpat test_runpy test_support test_threaded_import test_xmlrpc_net test___all__ test_argparse test_asyncore test_contextlib_async test_devpoll test_httplib test_kqueue test_msilib test_multiprocessing_fork test_multiprocessing_forkserver test_multiprocessing_main_handling test_multiprocessing_spawn test_nis test_nntplib test_normalization test_ntpath test_os test_ossaudiodev test_robotparser test_shutil test_site test_smtpnet test_socket test_ssl test_startfile test_timeout test_tix test_tk test_tools test_ttk_guionly test_ttk_textonly test_urllib2 test_urllib2net test_urllibnet test_winconsoleio test_winreg test_winsound test_zipfile64 test_zipimport test_lib2to3 test_concurrent_futures test_capi test_decimal test_ioctl test_linecache test_peg_generator test_pydoc test_regrtest test_tcl test_unparse test_venv test_weakref test_io"
+		emake profile-opt PROFILE_TASK="-m test.regrtest --pgo -uall,-audio -x test_gdb test_multiprocessing test_subprocess test_tokenize test_signal test_faulthandler test_sundry test_curses test_distutils test_imaplib test_import test_asyncio test_compileall test_pyexpat test_runpy test_support test_threaded_import test_xmlrpc_net test___all__ test_argparse test_asyncore test_contextlib_async test_devpoll test_httplib test_kqueue test_msilib test_multiprocessing_fork test_multiprocessing_forkserver test_multiprocessing_main_handling test_multiprocessing_spawn test_nis test_nntplib test_normalization test_ntpath test_os test_ossaudiodev test_robotparser test_shutil test_site test_smtpnet test_socket test_ssl test_startfile test_timeout test_tix test_tk test_tools test_ttk_guionly test_ttk_textonly test_unicodedata test_urllib2 test_urllib2net test_urllibnet test_winconsoleio test_winreg test_winsound test_zipfile64 test_zipimport test_lib2to3 test_concurrent_futures test_capi test_decimal test_ioctl test_linecache test_peg_generator test_pydoc test_regrtest test_tcl test_unparse test_venv test_weakref test_io" CPPFLAGS= CFLAGS= LDFLAGS=
 	else
 		emake CPPFLAGS= CFLAGS= LDFLAGS=
 	fi
+
 	# Work around bug 329499. See also bug 413751 and 457194.
 	if has_version dev-libs/libffi[pax_kernel]; then
 		pax-mark E python
@@ -187,10 +220,12 @@ src_test() {
 
 	# bug 660358
 	local -x COLUMNS=80
-
 	local -x PYTHONDONTWRITEBYTECODE=
 
-	emake test EXTRATESTOPTS="-u-network" CPPFLAGS= CFLAGS= LDFLAGS= < /dev/tty
+	local jobs=$(makeopts_jobs "${MAKEOPTS}" "$(get_nproc)")
+
+	emake test EXTRATESTOPTS="-u-network -j${jobs}" \
+		CPPFLAGS= CFLAGS= LDFLAGS= < /dev/tty
 	local result=$?
 
 	for test in ${skipped_tests}; do
@@ -312,37 +347,4 @@ src_install() {
 		ln -s "../../../bin/idle${PYVER}" \
 			"${scriptdir}/idle" || die
 	fi
-}
-
-pkg_preinst() {
-	if has_version "<${CATEGORY}/${PN}-${PYVER}" && ! has_version ">=${CATEGORY}/${PN}-${PYVER}_alpha"; then
-		python_updater_warning="1"
-	fi
-}
-
-eselect_python_update() {
-	if [[ -z "$(eselect python show)" || \
-			! -f "${EROOT}/usr/bin/$(eselect python show)" ]]; then
-		eselect python update
-	fi
-
-	if [[ -z "$(eselect python show --python${PV%%.*})" || \
-			! -f "${EROOT}/usr/bin/$(eselect python show --python${PV%%.*})" ]]
-	then
-		eselect python update --python${PV%%.*}
-	fi
-}
-
-pkg_postinst() {
-	eselect_python_update
-
-	if [[ "${python_updater_warning}" == "1" ]]; then
-		ewarn "You have just upgraded from an older version of Python."
-		ewarn
-		ewarn "Please adjust PYTHON_TARGETS (if so desired), and run emerge with the --newuse or --changed-use option to rebuild packages installing python modules."
-	fi
-}
-
-pkg_postrm() {
-	eselect_python_update
 }

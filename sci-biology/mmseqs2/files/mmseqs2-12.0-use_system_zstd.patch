@@ -1,0 +1,51 @@
+Description: Use system zstd 
+Source: https://salsa.debian.org/med-team/mmseqs2/-/raw/master/debian/patches/use_system_zstd.patch
+Author: Shayan Doust <hello@shayandoust.me>
+Last-Update: 2019-07-19
+Forwarded: not-needed
+---
+
+--- mmseqs2.orig/CMakeLists.txt
++++ mmseqs2/CMakeLists.txt
+@@ -161,18 +161,18 @@
+ # zstd
+ # We use ZSTD_findDecompressedSize which is only available with ZSTD_STATIC_LINKING_ONLY
+ # Thus we cannot use a system provided libzstd
+-set(ZSTD_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/zstd")
+-set(CMAKE_INSTALL_LIBDIR bin)
+-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/lib/zstd/build/cmake/CMakeModules")
+-option(ZSTD_LEGACY_SUPPORT "LEGACY SUPPORT" OFF)
+-option(ZSTD_BUILD_STATIC "BUILD STATIC LIBRARIES" ON)
+-option(ZSTD_BUILD_SHARED "BUILD SHARED LIBRARIES" OFF)
+-option(ZSTD_MULTITHREAD_SUPPORT "MULTITHREADING SUPPORT" OFF)
+-option(ZSTD_BUILD_PROGRAMS "BUILD PROGRAMS" OFF)
+-option(ZSTD_BUILD_CONTRIB "BUILD CONTRIB" OFF)
+-option(ZSTD_BUILD_TESTS "BUILD TESTS" OFF)
+-include_directories(lib/zstd/lib)
+-add_subdirectory(lib/zstd/build/cmake/lib EXCLUDE_FROM_ALL)
++#set(ZSTD_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/zstd")
++#set(CMAKE_INSTALL_LIBDIR bin)
++#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/lib/zstd/build/cmake/CMakeModules")
++#option(ZSTD_LEGACY_SUPPORT "LEGACY SUPPORT" OFF)
++#option(ZSTD_BUILD_STATIC "BUILD STATIC LIBRARIES" ON)
++#option(ZSTD_BUILD_SHARED "BUILD SHARED LIBRARIES" OFF)
++#option(ZSTD_MULTITHREAD_SUPPORT "MULTITHREADING SUPPORT" OFF)
++#option(ZSTD_BUILD_PROGRAMS "BUILD PROGRAMS" OFF)
++#option(ZSTD_BUILD_CONTRIB "BUILD CONTRIB" OFF)
++#option(ZSTD_BUILD_TESTS "BUILD TESTS" OFF)
++#include_directories(lib/zstd/lib)
++#add_subdirectory(lib/zstd/build/cmake/lib EXCLUDE_FROM_ALL)
+ 
+ # tinyexpr
+ include_directories(lib/tinyexpr)
+--- mmseqs2.orig/src/CMakeLists.txt
++++ mmseqs2/src/CMakeLists.txt
+@@ -130,7 +130,7 @@
+     message("-- OMPTL sorting fallback")
+ endif ()
+ 
+-target_link_libraries(mmseqs-framework tinyexpr libzstd_static microtar)
++target_link_libraries(mmseqs-framework tinyexpr zstd microtar)
+ if (CYGWIN)
+     target_link_libraries(mmseqs-framework nedmalloc)
+ endif ()
