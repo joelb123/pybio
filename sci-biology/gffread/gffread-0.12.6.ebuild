@@ -8,7 +8,8 @@ inherit toolchain-funcs
 DESCRIPTION="GFF/GTF utility providing format conversions, filter/extract regions from FASTA"
 HOMEPAGE="https://ccb.jhu.edu/software/stringtie/gff.shtml
 	https://github.com/gpertea/gffread"
-GCLIB_PV="0.12.4"
+#GCLIB_PV="0.12.6"
+GCLIB_PV=${PV}
 SRC_URI="https://github.com/gpertea/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/gpertea/gclib/archive/v${GCLIB_PV}.tar.gz -> gclib-${GCLIB_PV}.tar.gz"
 

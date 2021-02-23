@@ -191,8 +191,10 @@ src_compile() {
 	# https://bugs.gentoo.org/594768
 	local -x LC_ALL=C
 	if use pgo; then
-		# exclude failing tests and also the longest-running tests
-		emake profile-opt PROFILE_TASK="-m test.regrtest --pgo -uall,-audio -x test_gdb test_multiprocessing test_subprocess test_tokenize test_signal test_faulthandler test_sundry test_curses test_distutils test_imaplib test_import test_asyncio test_compileall test_pyexpat test_runpy test_support test_threaded_import test_xmlrpc_net test___all__ test_argparse test_asyncore test_contextlib_async test_devpoll test_httplib test_kqueue test_msilib test_multiprocessing_fork test_multiprocessing_forkserver test_multiprocessing_main_handling test_multiprocessing_spawn test_nis test_nntplib test_normalization test_ntpath test_os test_ossaudiodev test_robotparser test_shutil test_site test_smtpnet test_socket test_ssl test_startfile test_timeout test_tix test_tk test_tools test_ttk_guionly test_ttk_textonly test_unicodedata test_urllib2 test_urllib2net test_urllibnet test_winconsoleio test_winreg test_winsound test_zipfile64 test_zipimport test_lib2to3 test_concurrent_futures test_capi test_decimal test_ioctl test_linecache test_peg_generator test_pydoc test_regrtest test_tcl test_unparse test_venv test_weakref test_io" CPPFLAGS= CFLAGS= LDFLAGS=
+		# exclude failing and longest-running tests
+		EXCLUDES_FILE="${FILESDIR}"/exclude-tests-from-pgo.txt
+		EXCLUDED_TESTS="$(cat $EXCLUDES_FILE)" || die "Failed to cat excluded pgo tests"
+		emake profile-opt PROFILE_TASK="-m test.regrtest --pgo -uall,-audio -x $EXCLUDED_TESTS" CPPFLAGS= CFLAGS= LDFLAGS=
 	else
 		emake CPPFLAGS= CFLAGS= LDFLAGS=
 	fi
