@@ -31,11 +31,13 @@ src_install() {
 
 	if use bundled-jdk; then
 		fperms -R a+x /opt/pycharm-professional/jbr/bin/
+		chrpath -r '$ORIGIN' "${D}"/opt/pycharm-professional/jbr/lib/libjcef.so || die
+		chrpath -r '$ORIGIN' "${D}"/opt/pycharm-professional/jbr/lib/jcef_helper || die
 	else
 		rm -r "${D}"/opt/pycharm-professional/jbr/ || die
 	fi
 
-	fperms a+x /opt/${PN}/bin/{pycharm.sh,fsnotifier{,64},inspect.sh}
+	fperms a+x /opt/${PN}/bin/{pycharm.sh,fsnotifier{,64},inspect.sh,format.sh,ltedit.sh,printenv.py,restart.py}
 
 	dosym ../../opt/${PN}/bin/pycharm.sh /usr/bin/${PN}
 	newicon bin/${MY_PN}.png ${PN}.png

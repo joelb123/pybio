@@ -18,6 +18,7 @@ IUSE="test"
 
 BDEPEND="
 	dev-python/poetry-core[${PYTHON_USEDEP}]
+	dev-python/crashtest[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/pyrsistent-0.14.2[${PYTHON_USEDEP}]
 	>=dev-python/jsonschema-3.1[${PYTHON_USEDEP}]
