@@ -15,7 +15,7 @@ IUSE=""
 KEYWORDS="~amd64 ~x86 ~x64-macos"
 
 RDEPEND=""
-S="${WORKDIR}"/Source_code_including_submodules/${P}
+#S="${WORKDIR}"/Source_code_including_submodules/${P}
 
 PATCHES=( ${FILESDIR}/safestringlib.patch )
 DOCS=( NEWS.md README-ori.md README.md )
