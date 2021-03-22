@@ -16,7 +16,7 @@ IUSE="examples"
 
 RDEPEND="
 	dev-lang/perl
-	=sci-libs/htslib-1.11*
+	=sci-libs/htslib-1.12*
 	sys-libs/ncurses:0=
 	sys-libs/zlib:=
 "
@@ -24,12 +24,9 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 src_prepare() {
-	#default
-
 	# remove bundled htslib
 	rm -r htslib-* || die
 	eautoreconf
-	eapply "${FILESDIR}/${P}-libbam.so.patch"
 	default
 }
 
@@ -44,7 +41,7 @@ src_install() {
 	# install headers and libraries
 	insinto /usr/include/bam
 	doins *.h
-	dolib.so libbam.so*
+	#dolib.so libbam.so*
 
 	if use examples; then
 		dodoc -r examples
