@@ -1,0 +1,16 @@
+diff --git a/src/dynlibs.cc b/src/dynlibs.cc
+index 2de22a9..4a482e4 100644
+--- a/src/dynlibs.cc
++++ b/src/dynlibs.cc
+@@ -73,6 +73,11 @@ const char gz_libname[] = "libz.so";
+ void * gz_lib;
+ # endif
+ 
++/* No OF macro in Gentoo zconf.h, but we need it */
++#ifndef OF
++#define OF(args) args
++#endif
++
+ gzFile ZEXPORT (*gzdopen_p) OF((int, const char *));
+ int ZEXPORT (*gzclose_p) OF((gzFile));
+ int ZEXPORT (*gzread_p) OF((gzFile, void *, unsigned));

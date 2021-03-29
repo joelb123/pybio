@@ -1,0 +1,13 @@
+diff --git a/src/Makefile.am b/src/Makefile.am
+index a5621c6..72ac11d 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -6,7 +6,7 @@ else
+ if TARGET_AARCH64
+ AM_CXXFLAGS=-Wall -Wsign-compare -O3 -g -march=armv8-a+simd -mtune=generic
+ else
+-AM_CXXFLAGS=-Wall -Wsign-compare -O3 -g -march=x86-64 -mtune=generic
++AM_CXXFLAGS=-Wall -Wsign-compare -g 
+ endif
+ endif
+ 
