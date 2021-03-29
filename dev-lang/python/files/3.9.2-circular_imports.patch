@@ -1,0 +1,149 @@
+From c42d9777f7e3d307133adcaebc3a05a928999627 Mon Sep 17 00:00:00 2001
+From: Antoine Pitrou <antoine@python.org>
+Date: Sat, 20 Mar 2021 20:07:44 +0100
+Subject: [PATCH] [3.9] bpo-43517: Fix false positive in detection of circular
+ imports (GH-24895). (cherry picked from commit
+ 2fd16ef406bba239b1334057fb499496a84b3aa2)
+
+Co-authored-by: Antoine Pitrou <antoine@python.org>
+---
+ Lib/test/test_importlib/partial/cfimport.py   | 38 +++++++++++++++++++
+ .../test_importlib/partial/pool_in_threads.py | 27 +++++++++++++
+ .../test_importlib/test_threaded_import.py    | 14 ++++++-
+ .../2021-03-16-17-12-54.bpo-43517.zAo6Ws.rst  |  2 +
+ Python/import.c                               |  2 +-
+ 5 files changed, 81 insertions(+), 2 deletions(-)
+ create mode 100644 Lib/test/test_importlib/partial/cfimport.py
+ create mode 100644 Lib/test/test_importlib/partial/pool_in_threads.py
+ create mode 100644 Misc/NEWS.d/next/Core and Builtins/2021-03-16-17-12-54.bpo-43517.zAo6Ws.rst
+
+diff --git a/Lib/test/test_importlib/partial/cfimport.py b/Lib/test/test_importlib/partial/cfimport.py
+new file mode 100644
+index 0000000000000..c92d2fe1dd16f
+--- /dev/null
++++ b/Lib/test/test_importlib/partial/cfimport.py
+@@ -0,0 +1,38 @@
++import os
++import sys
++import threading
++import traceback
++
++
++NLOOPS = 50
++NTHREADS = 30
++
++
++def t1():
++    try:
++        from concurrent.futures import ThreadPoolExecutor
++    except Exception:
++        traceback.print_exc()
++        os._exit(1)
++
++def t2():
++    try:
++        from concurrent.futures.thread import ThreadPoolExecutor
++    except Exception:
++        traceback.print_exc()
++        os._exit(1)
++
++def main():
++    for j in range(NLOOPS):
++        threads = []
++        for i in range(NTHREADS):
++            threads.append(threading.Thread(target=t2 if i % 1 else t1))
++        for thread in threads:
++            thread.start()
++        for thread in threads:
++            thread.join()
++        sys.modules.pop('concurrent.futures', None)
++        sys.modules.pop('concurrent.futures.thread', None)
++
++if __name__ == "__main__":
++    main()
+diff --git a/Lib/test/test_importlib/partial/pool_in_threads.py b/Lib/test/test_importlib/partial/pool_in_threads.py
+new file mode 100644
+index 0000000000000..faa7867b814a4
+--- /dev/null
++++ b/Lib/test/test_importlib/partial/pool_in_threads.py
+@@ -0,0 +1,27 @@
++import multiprocessing
++import os
++import threading
++import traceback
++
++
++def t():
++    try:
++        with multiprocessing.Pool(1):
++            pass
++    except Exception:
++        traceback.print_exc()
++        os._exit(1)
++
++
++def main():
++    threads = []
++    for i in range(20):
++        threads.append(threading.Thread(target=t))
++    for thread in threads:
++        thread.start()
++    for thread in threads:
++        thread.join()
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/Lib/test/test_importlib/test_threaded_import.py b/Lib/test/test_importlib/test_threaded_import.py
+index d1f64c70fac80..d1f8db42fbe37 100644
+--- a/Lib/test/test_importlib/test_threaded_import.py
++++ b/Lib/test/test_importlib/test_threaded_import.py
+@@ -16,7 +16,7 @@
+ from unittest import mock
+ from test.support import (
+     verbose, run_unittest, TESTFN, reap_threads,
+-    forget, unlink, rmtree, start_threads)
++    forget, unlink, rmtree, start_threads, script_helper)
+ 
+ def task(N, done, done_tasks, errors):
+     try:
+@@ -244,6 +244,18 @@ def target():
+         __import__(TESTFN)
+         del sys.modules[TESTFN]
+ 
++    def test_concurrent_futures_circular_import(self):
++        # Regression test for bpo-43515
++        fn = os.path.join(os.path.dirname(__file__),
++                          'partial', 'cfimport.py')
++        script_helper.assert_python_ok(fn)
++
++    def test_multiprocessing_pool_circular_import(self):
++        # Regression test for bpo-41567
++        fn = os.path.join(os.path.dirname(__file__),
++                          'partial', 'pool_in_threads.py')
++        script_helper.assert_python_ok(fn)
++
+ 
+ @reap_threads
+ def test_main():
+diff --git a/Misc/NEWS.d/next/Core and Builtins/2021-03-16-17-12-54.bpo-43517.zAo6Ws.rst b/Misc/NEWS.d/next/Core and Builtins/2021-03-16-17-12-54.bpo-43517.zAo6Ws.rst
+new file mode 100644
+index 0000000000000..0f9926b93f654
+--- /dev/null
++++ b/Misc/NEWS.d/next/Core and Builtins/2021-03-16-17-12-54.bpo-43517.zAo6Ws.rst	
+@@ -0,0 +1,2 @@
++Fix misdetection of circular imports when using ``from pkg.mod import
++attr``, which caused false positives in non-trivial multi-threaded code.
+diff --git a/Python/import.c b/Python/import.c
+index 5e39a2fb9a02e..55fbe41bc1337 100644
+--- a/Python/import.c
++++ b/Python/import.c
+@@ -1863,7 +1863,7 @@ PyImport_ImportModuleLevelObject(PyObject *name, PyObject *globals,
+     }
+ 
+     if (mod != NULL && mod != Py_None) {
+-        if (import_ensure_initialized(tstate, mod, name) < 0) {
++        if (import_ensure_initialized(tstate, mod, abs_name) < 0) {
+             goto error;
+         }
+     }

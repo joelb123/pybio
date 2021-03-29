@@ -19,8 +19,7 @@ KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 IUSE="openmp threads"
 
 RDEPEND="${PYTHON_DEPS}
-	>=dev-python/llvmlite-0.34.0[${PYTHON_USEDEP}]
-	<dev-python/llvmlite-0.35.0
+	>=dev-python/llvmlite-0.36.0[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/pip[${PYTHON_USEDEP}]
 	dev-python/scipy[${PYTHON_USEDEP}]
@@ -35,6 +34,10 @@ distutils_enable_tests unittest
 PATCHES=(
 	"${FILESDIR}/${P}-skip_tests.patch"
 )
+
+# Will fail with circular import under python 3.9.2 unless patch
+# https://github.com/python/cpython/commits/c42d9777f7e3d307133adcaebc3a05a928999627 
+# has been applied to python 3.9.2
 
 pkg_setup() {
 	if ! use openmp; then

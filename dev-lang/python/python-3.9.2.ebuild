@@ -66,6 +66,7 @@ RDEPEND+=" !build? ( app-misc/mime-types )"
 PDEPEND="app-eselect/eselect-python"
 
 VERIFY_SIG_OPENPGP_KEY_PATH=/usr/share/openpgp-keys/python.org.asc
+EXCLUDED_PGO_FILE="${FILESDIR}"/3.9-exclude_tests_from_pgo.txt
 
 # large file tests involve a 2.5G file being copied (duplicated)
 CHECKREQS_DISK_BUILD=5500M
@@ -93,6 +94,7 @@ src_prepare() {
 
 	local PATCHES=(
 		"${WORKDIR}/${PATCHSET}"
+		"${FILESDIR}/${PV}-circular_imports.patch"
 	)
 
 	default
@@ -204,11 +206,9 @@ src_compile() {
 
 	if use pgo; then
 		# exclude failing and longest-running tests
-		EXCLUDES_FILE="${FILESDIR}"/exclude-tests-from-pgo.txt
-		EXCLUDED_TESTS="$(cat $EXCLUDES_FILE)" || die "Failed to cat excluded pg
-o tests"
+		EXCLUDED_PGO_TESTS="$(cat $EXCLUDE_PGO_TESTS_FILE | tr '\n\' ' ')" || die "Failed to cat excluded tests"
 		emake profile-opt PROFILE_TASK="-m test.regrtest --pgo -uall,-audio -x $
-EXCLUDED_TESTS" CPPFLAGS= CFLAGS= LDFLAGS=
+EXCLUDED_PGO_TESTS" CPPFLAGS= CFLAGS= LDFLAGS=
 	else
 		emake CPPFLAGS= CFLAGS= LDFLAGS=
 	fi

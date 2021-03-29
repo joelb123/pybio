@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person" proxied="yes">
+		<email>joel@generisbio.com</email>
+		<name>Joel Berendzen</name>
+	</maintainer>
+	<longdescription lang="en">
+	 PyDove is an assortment of graphics utilities using matplotlib and seaborn
+	</longdescription>
+	<upstream>
+		<remote-id type="github">ttesileanu/pydove</remote-id>
+	</upstream>
+</pkgmetadata>

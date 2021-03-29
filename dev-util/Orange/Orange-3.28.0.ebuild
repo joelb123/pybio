@@ -37,7 +37,6 @@ RDEPEND="
 	dev-python/requests[${PYTHON_USEDEP}]
 	dev-python/serverfiles[${PYTHON_USEDEP}]
 	>=dev-python/setuptools-36.3[${PYTHON_USEDEP}]
-	>=dev-python/xlrd-0.9.2[${PYTHON_USEDEP}]
 	dev-python/xlsxwriter[${PYTHON_USEDEP}]
 	>=sci-libs/scikit-learn-0.20.0[${PYTHON_USEDEP}]
 	"
