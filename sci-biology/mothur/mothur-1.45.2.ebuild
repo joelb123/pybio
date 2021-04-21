@@ -8,7 +8,7 @@ inherit eutils flag-o-matic toolchain-funcs
 
 DESCRIPTION="A suite of algorithms for ecological bioinformatics"
 HOMEPAGE="https://www.mothur.org/"
-SRC_URI="https://github.com/mothur/mothur/archive/refs/tags/v.${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/mothur/mothur/archive/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -24,7 +24,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	app-arch/unzip"
 
-S="${WORKDIR}"/${PN}-v.${PV}
+S="${WORKDIR}"/${PN}-tags-v${PV}
 
 pkg_setup() {
 	export OPTIMIZE=yes

@@ -7,7 +7,7 @@ inherit gnome2-utils readme.gentoo-r1 xdg
 
 DESCRIPTION="Intelligent Python IDE with unique code assistance and analysis"
 HOMEPAGE="https://www.jetbrains.com/pycharm/"
-SRC_URI="httpis://download.jetbrains.com/python/${P}.tar.gz"
+SRC_URI="https://download.jetbrains.com/python/${P}.tar.gz"
 
 LICENSE="PyCharm_Academic PyCharm_Classroom PyCharm PyCharm_OpenSource PyCharm_Preview"
 SLOT="0"

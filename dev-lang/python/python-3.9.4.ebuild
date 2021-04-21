@@ -4,7 +4,7 @@
 EAPI="7"
 WANT_LIBTOOL="none"
 
-inherit autotools flag-o-matic multiprocessing pax-utils \
+inherit autotools check-reqs flag-o-matic multiprocessing pax-utils \
 	python-utils-r1 toolchain-funcs verify-sig
 
 MY_PV=${PV/_rc/rc}
@@ -60,12 +60,25 @@ DEPEND="${RDEPEND}
 	test? ( app-arch/xz-utils[extra-filters(+)] )"
 BDEPEND="
 	virtual/pkgconfig
+	sys-devel/autoconf-archive
 	verify-sig? ( app-crypt/openpgp-keys-python )
 	!sys-devel/gcc[libffi(-)]"
-PDEPEND="app-eselect/eselect-python"
 RDEPEND+=" !build? ( app-misc/mime-types )"
+PDEPEND="app-eselect/eselect-python"
 
 VERIFY_SIG_OPENPGP_KEY_PATH=/usr/share/openpgp-keys/python.org.asc
+EXCLUDED_PGO_TESTS_FILE="${FILESDIR}"/3.9-exclude_tests_from_pgo.txt
+
+# large file tests involve a 2.5G file being copied (duplicated)
+CHECKREQS_DISK_BUILD=5500M
+
+pkg_pretend() {
+	use test && check-reqs_pkg_pretend
+}
+
+pkg_setup() {
+	use test && check-reqs_pkg_setup
+}
 
 src_unpack() {
 	if use verify-sig; then
@@ -141,11 +154,6 @@ src_configure() {
 	# Export CXX so it ends up in /usr/lib/python3.X/config/Makefile.
 	tc-export CXX
 
-	# Set LDFLAGS so we link modules with -lpython3.2 correctly.
-	# Needed on FreeBSD unless Python 3.2 is already installed.
-	# Please query BSD team before removing this!
-	append-ldflags "-L."
-
 	# Fix implicit declarations on cross and prefix builds. Bug #674070.
 	use ncurses && append-cppflags -I"${ESYSROOT}"/usr/include/ncursesw
 
@@ -171,7 +179,7 @@ src_configure() {
 		--without-ensurepip
 		--with-system-expat
 		--with-system-ffi
-		$(use_with lto)
+		$(use-with lto)
 	)
 	if use pgo; then
 		myeconfarg+=("--enable-optimizations")
@@ -190,11 +198,11 @@ src_compile() {
 	# Ensure sed works as expected
 	# https://bugs.gentoo.org/594768
 	local -x LC_ALL=C
+
 	if use pgo; then
 		# exclude failing and longest-running tests
-		EXCLUDES_FILE="${FILESDIR}"/exclude-tests-from-pgo.txt
-		EXCLUDED_TESTS="$(cat $EXCLUDES_FILE)" || die "Failed to cat excluded pgo tests"
-		emake profile-opt PROFILE_TASK="-m test.regrtest --pgo -uall,-audio -x $EXCLUDED_TESTS" CPPFLAGS= CFLAGS= LDFLAGS=
+		EXCLUDED_PGO_TESTS="$(cat $EXCLUDED_PGO_TESTS_FILE | tr '\n\' ' ')" || die "Failed to cat excluded tests"
+		emake profile-opt PROFILE_TASK="-m test.regrtest --pgo -uall,-audio -x $EXCLUDED_PGO_TESTS" CPPFLAGS= CFLAGS= LDFLAGS=
 	else
 		emake CPPFLAGS= CFLAGS= LDFLAGS=
 	fi
@@ -288,8 +296,6 @@ src_install() {
 	use sqlite || rm -r "${libdir}/"{sqlite3,test/test_sqlite*} || die
 	use tk || rm -r "${ED}/usr/bin/idle${PYVER}" "${libdir}/"{idlelib,tkinter,test/test_tk*} || die
 
-	use wininst || rm "${libdir}/distutils/command/"wininst-*.exe || die
-
 	dodoc Misc/{ACKS,HISTORY,NEWS}
 
 	if use examples; then
@@ -349,5 +355,6 @@ src_install() {
 	if use tk; then
 		ln -s "../../../bin/idle${PYVER}" \
 			"${scriptdir}/idle" || die
+
 	fi
 }

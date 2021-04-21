@@ -3,7 +3,7 @@
 
 EAPI="7"
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{7..9} )
 
 inherit distutils-r1
 
@@ -18,10 +18,9 @@ IUSE="test"
 
 BDEPEND="
 	dev-python/poetry-core[${PYTHON_USEDEP}]
-	dev-python/crashtest[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
+	dev-python/atomicwrites[${PYTHON_USEDEP}]
 	>=dev-python/pyrsistent-0.14.2[${PYTHON_USEDEP}]
-	>=dev-python/jsonschema-3.1[${PYTHON_USEDEP}]
 	>=dev-python/pexpect-4.7.0[${PYTHON_USEDEP}]
 	>=dev-python/keyring-20.0.1[${PYTHON_USEDEP}]
 	test? (
@@ -37,20 +36,22 @@ RDEPEND="${BDEPEND}
 	>=dev-python/clikit-0.6.2[${PYTHON_USEDEP}]
 	>=dev-python/cachy-0.3.0[${PYTHON_USEDEP}]
 	>=dev-python/CacheControl-0.12.4[${PYTHON_USEDEP}]
+	dev-python/crashtest[${PYTHON_USEDEP}]
+	>=dev-python/entrypoints-0.3[${PYTHON_USEDEP}]
 	dev-python/httpretty[${PYTHON_USEDEP}]
 	dev-python/html5lib[${PYTHON_USEDEP}]
 	>=dev-python/shellingham-1.1[${PYTHON_USEDEP}]
 	>=dev-python/tomlkit-0.5.11[${PYTHON_USEDEP}]
 	>=dev-python/jsonschema-3.1[${PYTHON_USEDEP}]
-	>=dev-python/packaging-1.4[${PYTHON_USEDEP}]
+	>=dev-python/packaging-20.9[${PYTHON_USEDEP}]
 	>=dev-python/pkginfo-1.4[${PYTHON_USEDEP}]
 	>=dev-python/virtualenv-1.4[${PYTHON_USEDEP}]
 "
 #	>=dev-python/poetry-core-1.0.0_alpha9[${PYTHON_USEDEP}]
 
-PATCHES=(
-	"${FILESDIR}"/${P}-no-pinned-deps.patch
-)
+#PATCHES=(
+#	"${FILESDIR}"/${P}-no-pinned-deps.patch
+#)
 
 python_test() {
 	pytest -vv || die
