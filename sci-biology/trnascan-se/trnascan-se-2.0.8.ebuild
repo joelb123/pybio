@@ -4,14 +4,14 @@ inherit perl-functions
 
 DESCRIPTION="tRNA detection in large-scale genome sequences"
 HOMEPAGE="https://lowelab.ucsc.edu/tRNAscan-SE/"
-SRC_URI="httpis://trna.ucsc.edu/software/${P}.tar.gz"
+SRC_URI="https://github.com/UCSC-LoweLab/tRNAscan-SE/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-S="${WORKDIR}"/tRNAscan-SE-2.0/
+S="${WORKDIR}"/tRNAscan-SE-${PV}/
 
 src_test() {
 	emake PATH="${S}:${PATH}" testrun
