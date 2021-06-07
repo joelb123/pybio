@@ -18,9 +18,9 @@ IUSE="test"
 BDEPEND="
 	test? ( dev-python/pytest[${PYTHON_USEDEP}] )
 "
-PATCHES=(
-	"${FILESDIR}"/${P}-no-test-package.patch
-)
+#PATCHES=(
+#	"${FILESDIR}"/${P}-no-test-package.patch
+#)
 RDEPEND="${BDEPEND}
 "
 
