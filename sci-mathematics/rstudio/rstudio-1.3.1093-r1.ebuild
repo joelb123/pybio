@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -18,7 +18,7 @@ QT_SLOT=5
 
 DESCRIPTION="IDE for the R language"
 HOMEPAGE="
-	https://www.rstudio.org
+	http://www.rstudio.org
 	https://github.com/rstudio/rstudio/"
 SRC_URI="
 	https://github.com/rstudio/rstudio/archive/v${PV}.tar.gz -> ${P}.tar.gz
@@ -28,7 +28,7 @@ SRC_URI="
 LICENSE="AGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
-IUSE="dedicated libressl server"
+IUSE="dedicated server"
 
 RDEPEND="
 	>=app-text/pandoc-${PANDOC_VER}
@@ -74,8 +74,8 @@ RDEPEND="
 		acct-user/rstudio-server
 		acct-group/rstudio-server
 	)
-	!libressl? ( dev-libs/openssl:0= )
-	libressl? ( dev-libs/libressl:0= )"
+	dev-libs/openssl:0=
+	"
 DEPEND="${RDEPEND}
 	app-arch/unzip
 	dev-java/ant-core
@@ -94,6 +94,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-1.2.5042-boost-1.73.0.patch
 	"${FILESDIR}"/${PN}-1.3.1056-R-4.0.0.patch
 	"${FILESDIR}"/${PN}-1.3.1056-boost-1.74.0.patch
+	"${FILESDIR}"/${PN}-1.3.1093-boost-1.76.patch
 )
 
 src_unpack() {
@@ -176,6 +177,7 @@ src_configure() {
 		-DRSTUDIO_TARGET=$(usex dedicated "Server" "$(usex server "Development" "Desktop")")
 		-DRSTUDIO_VERIFY_R_VERSION=FALSE
 		-DRSTUDIO_USE_SYSTEM_BOOST=TRUE
+		-DRSTUDIO_BOOST_SIGNALS_VERSION=2
 		)
 
 	if use !dedicated; then
