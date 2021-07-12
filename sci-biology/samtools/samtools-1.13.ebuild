@@ -16,7 +16,7 @@ IUSE="examples"
 
 RDEPEND="
 	dev-lang/perl
-	=sci-libs/htslib-1.12*
+	=sci-libs/htslib-1.13*
 	sys-libs/ncurses:0=
 	sys-libs/zlib:=
 "

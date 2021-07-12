@@ -5,7 +5,7 @@ EAPI=7
 
 inherit autotools
 DESCRIPTION="C library for high-throughput sequencing data formats"
-HOMEPAGE="https://www.htslib.org/ https://githubi.com/samtools/htslib"
+HOMEPAGE="https://www.htslib.org/ https://github.com/samtools/htslib"
 SRC_URI="https://github.com/samtools/${PN}/archive/${PV}/${P}.tar.gz"
 
 SLOT="0/2"

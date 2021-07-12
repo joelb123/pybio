@@ -19,7 +19,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RDEPEND="
 	dev-lang/perl
-	=sci-libs/htslib-1.12*:=
+	=sci-libs/htslib-1.13*:=
 	sys-libs/zlib:=
 	${PYTHON_DEPS}"
 DEPEND="${RDEPEND}"
