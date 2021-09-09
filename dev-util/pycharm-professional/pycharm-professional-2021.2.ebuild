@@ -1,9 +1,9 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit gnome2-utils readme.gentoo-r1 xdg
+inherit desktop readme.gentoo-r1 xdg
 
 DESCRIPTION="Intelligent Python IDE with unique code assistance and analysis"
 HOMEPAGE="https://www.jetbrains.com/pycharm/"
@@ -37,7 +37,7 @@ src_install() {
 		rm -r "${D}"/opt/pycharm-professional/jbr/ || die
 	fi
 
-	fperms a+x /opt/${PN}/bin/{pycharm.sh,fsnotifier{,64},inspect.sh,format.sh,ltedit.sh,printenv.py,restart.py}
+	fperms a+x /opt/${PN}/bin/{pycharm.sh,fsnotifier,inspect.sh,format.sh,ltedit.sh,printenv.py,restart.py}
 
 	dosym ../../opt/${PN}/bin/pycharm.sh /usr/bin/${PN}
 	newicon bin/${MY_PN}.png ${PN}.png
@@ -53,11 +53,9 @@ src_install() {
 }
 
 pkg_postinst() {
-	xdg_pkg_postinst
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {
-	xdg_pkg_postrm
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }

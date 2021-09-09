@@ -24,7 +24,7 @@ S="${WORKDIR}/${MY_P}"
 LICENSE="PSF-2"
 SLOT="${PYVER}"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
-IUSE="bluetooth build examples gdbm hardened ipv6 libressl lto +ncurses pgo +readline sqlite +ssl test tk wininst +xml"
+IUSE="bluetooth build examples gdbm hardened lto +ncurses pgo +readline sqlite +ssl test tk wininst +xml"
 RESTRICT="!test? ( test )"
 
 # Do not add a dependency on dev-lang/python to this ebuild.
@@ -43,10 +43,7 @@ RDEPEND="app-arch/bzip2:=
 	ncurses? ( >=sys-libs/ncurses-5.2:= )
 	readline? ( >=sys-libs/readline-4.1:= )
 	sqlite? ( >=dev-db/sqlite-3.3.8:3= )
-	ssl? (
-		!libressl? ( dev-libs/openssl:= )
-		libressl? ( dev-libs/libressl:= )
-	)
+	ssl? ( >=dev-libs/openssl-1.1.1:= )
 	tk? (
 		>=dev-lang/tcl-8.0:=
 		>=dev-lang/tk-8.0:=
@@ -64,7 +61,6 @@ BDEPEND="
 	verify-sig? ( app-crypt/openpgp-keys-python )
 	!sys-devel/gcc[libffi(-)]"
 RDEPEND+=" !build? ( app-misc/mime-types )"
-PDEPEND="app-eselect/eselect-python"
 
 VERIFY_SIG_OPENPGP_KEY_PATH=/usr/share/openpgp-keys/python.org.asc
 EXCLUDED_PGO_TESTS_FILE="${FILESDIR}"/3.9-exclude_tests_from_pgo.txt
@@ -169,7 +165,7 @@ src_configure() {
 		ac_cv_header_stropts_h=no
 
 		--enable-shared
-		$(use_enable ipv6)
+		--enable-ipv6
 		--infodir='${prefix}/share/info'
 		--mandir='${prefix}/share/man'
 		--with-computed-gotos
