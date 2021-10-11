@@ -7,11 +7,8 @@ inherit cmake bash-completion-r1
 
 DESCRIPTION="Fast and sensitive sequence search and clustering"
 HOMEPAGE="https://github.com/soedinglab/MMseqs2"
-#The next line must be manually updated with each release
-COMMIT="45111b641859ed0ddd875b94d6fd1aef1a675b7e"
-
 MY_PN="MMseqs2"
-MY_PV="${PV}-${COMMIT:0:5}"
+MY_PV="${PV%%.*}-${PV##*.}"
 
 SRC_URI="https://github.com/soedinglab/${MY_PN}/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz"
 
