@@ -3,8 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6..9} )
-DISTUTILS_USE_SETUPTOOL=rdepend
+PYTHON_COMPAT=( python3_{6..10} )
 inherit distutils-r1
 
 DESCRIPTION="Tool to detect surrounding shell"

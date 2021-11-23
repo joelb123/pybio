@@ -3,7 +3,7 @@
 
 EAPI="7"
 
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{7..10} )
 
 inherit distutils-r1
 
@@ -35,7 +35,7 @@ RDEPEND="${BDEPEND}
 	>=dev-python/cleo-0.7.6[${PYTHON_USEDEP}]
 	>=dev-python/clikit-0.6.2[${PYTHON_USEDEP}]
 	>=dev-python/cachy-0.3.0[${PYTHON_USEDEP}]
-	>=dev-python/CacheControl-0.12.4[${PYTHON_USEDEP}]
+	>=dev-python/cachecontrol-0.12.4[${PYTHON_USEDEP}]
 	dev-python/crashtest[${PYTHON_USEDEP}]
 	>=dev-python/entrypoints-0.3[${PYTHON_USEDEP}]
 	dev-python/httpretty[${PYTHON_USEDEP}]

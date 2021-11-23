@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( pypy pypy3 python3_{6..9} )
+PYTHON_COMPAT=( pypy pypy3 python3_{6..10} )
 inherit distutils-r1
 
 DESCRIPTION="Execute binaries from Python packages in isolated environments"

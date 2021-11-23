@@ -3,13 +3,14 @@
 
 EAPI="7"
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{6..10} )
 
 inherit distutils-r1
 
 DESCRIPTION="CLIs based on type hints."
 HOMEPAGE="https://typer.tiangolo.com https://github.com/tiangolo/typer"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+DISTUTILS_USE_SETUPTOOLS=rdepend
 
 LICENSE="MIT"
 SLOT="0"

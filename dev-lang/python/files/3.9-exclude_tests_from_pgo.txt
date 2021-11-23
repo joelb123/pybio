@@ -2,6 +2,7 @@ test___all__
 test_argparse
 test_asyncio
 test_asyncore
+test_bdb
 test_capi
 test_compileall
 test_compileall
@@ -9,13 +10,16 @@ test_concurrent_futures
 test_contextlib_async
 test_curses
 test_decimal
+test_deque
 test_devpoll
 test_distutils
+test_doctest
 test_faulthandler
 test_gdb
 test_httplib
 test_imaplib
 test_import
+test_importlib
 test_io
 test_ioctl
 test_kqueue
@@ -34,6 +38,7 @@ test_ntpath
 test_os
 test_ossaudiodev
 test_peg_generator
+test_pickle
 test_pydoc
 test_pyexpat
 test_regrtest
