@@ -20,7 +20,7 @@ DEPEND="
 "
 
 PATCHES=( "${FILESDIR}"/OF-macro-fix.patch 
-	"${FILESDIR}"/respect-cxxflags.patch
+	#"${FILESDIR}"/respect-cxxflags.patch
 	)
 
 src_prepare() {
