@@ -21,8 +21,7 @@ RDEPEND="
 	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/rdflib[${PYTHON_USEDEP}]
 	dev-python/pygraphviz[${PYTHON_USEDEP}]
-	>=dev-python/reportlab-3.5.13-r1[${PYTHON_USEDEP}]
-	dev-python/pydot[${PYTHON_USEDEP}]"
+	>=dev-python/reportlab-3.5.13-r1[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 BDEPEND="sys-devel/flex"
 

@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -19,10 +19,10 @@ KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 IUSE="openmp threads"
 
 RDEPEND="
-	>=dev-python/llvmlite-0.37.0[${PYTHON_USEDEP}]
-	<dev-python/llvmlite-0.38.0
-	>=dev-python/numpy-1.17.0[${PYTHON_USEDEP}]
-	threads? ( >=dev-cpp/tbb-2021.4 )
+	>=dev-python/llvmlite-0.38.0[${PYTHON_USEDEP}]
+	<=dev-python/llvmlite-0.39.0
+	>=dev-python/numpy-1.18.0[${PYTHON_USEDEP}]
+	threads? ( >=dev-cpp/tbb-2019.5 )
 "
 BDEPEND="
 	dev-python/pip[${PYTHON_USEDEP}]
@@ -34,7 +34,7 @@ distutils_enable_tests unittest
 distutils_enable_sphinx docs/source dev-python/numpydoc dev-python/sphinx_rtd_theme
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0.54-skip_tests.patch"
+	"${FILESDIR}/${PN}-0.53.0-skip_tests.patch"
 )
 
 pkg_setup() {

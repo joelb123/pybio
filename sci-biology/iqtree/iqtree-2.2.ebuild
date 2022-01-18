@@ -25,7 +25,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/${PN}2-${PV}"
+S="${WORKDIR}/${PN}2-${PV}-beta"
 
 src_configure() {
 	local mycmakeargs=(

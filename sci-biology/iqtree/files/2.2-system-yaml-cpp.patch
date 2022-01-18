@@ -1,37 +1,24 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 201df29..9bf21da 100644
+index dfbcd72..8a6b058 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -107,7 +107,6 @@ if (CMAKE_GENERATOR MATCHES "Xcode")
+@@ -108,7 +108,6 @@ if (CMAKE_GENERATOR MATCHES "Xcode")
  endif()
  
  include_directories("${PROJECT_SOURCE_DIR}")
 -include_directories("${PROJECT_SOURCE_DIR}/yaml-cpp/include")
+ include_directories(after system "/usr/local/include")
  
  ##################################################################
- # Include the Terraphast library
-@@ -541,6 +540,14 @@ else(ZLIB_FOUND)
-   add_subdirectory(zlib-1.2.7)
- endif(ZLIB_FOUND)
- 
-+find_package(GSL)
-+if(GSL_FOUND)
-+   message ("Using system gsl")
-+   include_directories(${GSL_INCLUDE_DIRS})
-+else(GSL_FOUND)
-+	message(FATAL_ERROR "gsl library not found")
-+endif(GSL_FOUND)
-+
- ##################################################################
- # subdirectories containing necessary libraries for the build
- ##################################################################
-@@ -564,16 +571,8 @@ add_subdirectory(sprng)
+@@ -626,17 +625,17 @@ add_subdirectory(sprng)
  add_subdirectory(vectorclass)
  LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}")
  add_subdirectory(model)
 -add_subdirectory(gsl)
++
  add_subdirectory(alignment)
  add_subdirectory(tree)
+ add_subdirectory(terrace)
 -
 -# YAML library
 -option(YAML_CPP_BUILD_TESTS "Enable testing" OFF)
@@ -39,24 +26,31 @@ index 201df29..9bf21da 100644
 -option(YAML_CPP_BUILD_CONTRIB "Enable contrib stuff in library" OFF)
 -option(YAML_CPP_INSTALL "Enable generation of install target" OFF)
 -add_subdirectory(yaml-cpp)
++find_package(GSL)
++if(GSL_FOUND)
++   message ("Using system gsl")
++   include_directories(${GSL_INCLUDE_DIRS})
++else(GSL_FOUND)
++	message(FATAL_ERROR "gsl library not found")
++endif(GSL_FOUND)
  add_subdirectory(phylo-yaml)
  
  if (USE_TERRAPHAST)
-@@ -615,7 +614,7 @@ endif()
+@@ -678,7 +677,7 @@ endif()
  
  if (NOT IQTREE_FLAGS MATCHES "avx" AND NOT IQTREE_FLAGS MATCHES "fma")
      if (NOT IQTREE_FLAGS MATCHES "nosse")
 -        set_target_properties(iqtree2 ncl nclextra utils pda lbfgsb whtest sprng vectorclass model gsl alignment tree yaml-cpp phyloYAML main PROPERTIES COMPILE_FLAGS "${SSE_FLAGS}")
 +        set_target_properties(iqtree2 ncl nclextra utils pda lbfgsb whtest sprng vectorclass model alignment tree phyloYAML main PROPERTIES COMPILE_FLAGS "${SSE_FLAGS}")
          if (USE_TERRAPHAST)
-             set_target_properties(terrace terraphast PROPERTIES COMPILE_FLAGS "${SSE_FLAGS}")
+             set_target_properties(terracetphast terraphast PROPERTIES COMPILE_FLAGS "${SSE_FLAGS}")
          endif()
-@@ -678,7 +677,7 @@ endif()
+@@ -741,7 +740,7 @@ endif()
  
  # basic linking librararies
  target_link_libraries(iqtree2 pll ncl nclextra utils pda lbfgsb whtest sprng vectorclass model
--    gsl alignment tree yaml-cpp phyloYAML main ${PLATFORM_LIB} ${STD_LIB} ${THREAD_LIB} ${ATOMIC_LIB})
-+    alignment tree phyloYAML main ${PLATFORM_LIB} ${STD_LIB} ${THREAD_LIB} ${ATOMIC_LIB})
+-    gsl alignment tree terrace yaml-cpp phyloYAML main ${PLATFORM_LIB} ${STD_LIB} ${THREAD_LIB} ${ATOMIC_LIB})
++    alignment tree terrace phyloYAML main ${PLATFORM_LIB} ${STD_LIB} ${THREAD_LIB} ${ATOMIC_LIB})
  
  if (USE_TERRAPHAST)
-    target_link_libraries(iqtree2 terrace)
+    target_link_libraries(iqtree2 terracetphast)
