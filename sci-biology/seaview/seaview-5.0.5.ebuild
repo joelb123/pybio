@@ -6,8 +6,8 @@ EAPI=6
 inherit eutils toolchain-funcs
 
 DESCRIPTION="A graphical multiple sequence alignment editor"
-HOMEPAGE="https://pbil.univ-lyon1.fr/software/seaview.html"
-SRC_URI="https://pbil.univ-lyon1.fr/pub/mol_phylogeny/seaview/archive/${PN}_${PV}.tar.gz"
+HOMEPAGE="https://doua.prabi.fr/software/seaview"
+SRC_URI="https://doua.prabi.fr/software/${PN}_data/${PN}_${PV}.tar.gz"
 
 LICENSE="public-domain"
 SLOT="0"
