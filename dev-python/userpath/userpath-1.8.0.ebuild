@@ -4,7 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{7..10} )
-#DISTUTILS_USE_SETUPTOOLS="pyproject.toml"
+DISTUTILS_USE_SETUPTOOLS="pyproject.toml"
 inherit distutils-r1
 
 DESCRIPTION="Cross-platform tool for adding locations to the user PATH"
@@ -26,6 +26,7 @@ DEPEND="
 	)
 "
 RDEPEND="${DEPEND}"
+PATCHES=( "${FILESDIR}/${PN}-1.8.0-use_poetry.patch" )
 
 python_prepare_all(){
 	use !test && rm tests/__init__.py
