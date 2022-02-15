@@ -16,7 +16,9 @@ SRC_URI="https://github.com/soedinglab/${MY_PN}/archive/refs/tags/${MY_PV}.tar.g
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cpu_flags_x86_sse4_1 cpu_flags_x86_sse2 cpu_flags_x86_avx2"
+
+# This package only builds correctly native and does not respect
+# CPU flags, despite a subset of them being defined as cmake flags.
 
 # Need static libs per https://github.com/soedinglab/MMseqs2/issues/411
 DEPEND="
@@ -34,12 +36,6 @@ src_configure() {
         local mycmakeargs=(
                 -DBUILD_SHARED_LIBS=OFF
                 -DUSE_SYSTEM_ZSTD=ON
-                # Disable auto detection, build respecting cpu flags instead
-                -DNATIVE_ARCH=OFF
-                -DHAVE_AVX2="$(usex cpu_flags_x86_avx2)"
-                -DHAVE_SSE4_1="$(usex cpu_flags_x86_sse4_1)"
-                -DHAVE_SSE2="$(usex cpu_flags_x86_sse2)"
-                # We also have cpu flags for ppc/arm/s390x
                 -DVERSION_OVERRIDE=${MY_PV}
         )
         cmake_src_configure
