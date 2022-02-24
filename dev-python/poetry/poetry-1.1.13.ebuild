@@ -39,7 +39,6 @@ RDEPEND="${BDEPEND}
 	>=dev-python/requests-toolbelt-0.9.1[${PYTHON_USEDEP}]
 	>=dev-python/shellingham-1.1[${PYTHON_USEDEP}]
 	>=dev-python/setuptools-60.4[${PYTHON_USEDEP}]
-	<dev-python/setuptools-60.7[${PYTHON_USEDEP}]
 	>=dev-python/tomlkit-0.7[${PYTHON_USEDEP}]
 	>=dev-python/virtualenv-20.11[${PYTHON_USEDEP}]
 "
