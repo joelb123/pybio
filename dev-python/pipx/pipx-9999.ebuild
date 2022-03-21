@@ -4,6 +4,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( pypy pypy3 python3_{6..10} )
+DISTUTILS_USE_SETUPTOOLS="pyproject.toml"
 inherit distutils-r1
 
 DESCRIPTION="Execute binaries from Python packages in isolated environments"

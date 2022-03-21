@@ -24,7 +24,7 @@ BDEPEND="
 	)
 	"
 RDEPEND="${BDEPEND}
-	~dev-python/poetry-core-1.0.7[${PYTHON_USEDEP}]
+	~dev-python/poetry-core-1.0.8[${PYTHON_USEDEP}]
 	>=dev-python/cachecontrol-0.12.9[${PYTHON_USEDEP}]
 	>=dev-python/cachy-0.3.0[${PYTHON_USEDEP}]
 	~dev-python/cleo-0.8.1[${PYTHON_USEDEP}]
