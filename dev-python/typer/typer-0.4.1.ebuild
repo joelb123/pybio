@@ -1,16 +1,16 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="7"
+EAPI="8"
 
-PYTHON_COMPAT=( python3_{6..10} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit distutils-r1
 
 DESCRIPTION="CLIs based on type hints."
 HOMEPAGE="https://typer.tiangolo.com https://github.com/tiangolo/typer"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
-DISTUTILS_USE_SETUPTOOLS=rdepend
+DISTUTILS_USE_SETUPTOOLS=pyproject.toml
 
 LICENSE="MIT"
 SLOT="0"
