@@ -7,7 +7,7 @@ inherit eutils
 
 DESCRIPTION="Gephi"
 HOMEPAGE="https://gephi.org/"
-SRC_URI="https://github.com/gephi/gephi/releases/download/v${PV}/gephi-${PV}-linux.tar.gz"
+SRC_URI="https://github.com/gephi/gephi/releases/download/v${PV}/gephi-${PV}-linux-x64.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
