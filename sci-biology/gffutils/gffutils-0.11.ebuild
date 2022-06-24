@@ -9,7 +9,7 @@ inherit distutils-r1
 
 DESCRIPTION="GFF and GTF file manipulation and interconversion"
 HOMEPAGE="https://pythonhosted.org/gffutils/"
-SRC_URI="https://github.com/daler/gffutils/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/daler/gffutils/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
