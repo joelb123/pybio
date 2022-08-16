@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/sci-biology/phyml/phyml-2.4.5-r1.ebuild,v 1.2 2010/07/16 09:54:58 fauli Exp $
 
-EAPI=5
+EAPI=7
 
 inherit autotools toolchain-funcs eutils
 

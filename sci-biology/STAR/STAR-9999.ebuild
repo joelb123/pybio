@@ -1,7 +1,7 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 
 inherit git-r3 toolchain-funcs
 
@@ -22,6 +22,7 @@ RDEPEND="${DEPEND}"
 src_prepare(){
 	sed -e "s/= gcc/= $(tc-getCC)/;s/-O2/${CFLAGS}/g" -i source/htslib/Makefile || die
 	sed -e "s/-O3/${CFLAGS}/g" -i source/Makefile || die
+	default
 }
 
 src_compile(){

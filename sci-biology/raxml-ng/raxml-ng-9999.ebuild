@@ -1,13 +1,13 @@
 # Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 DESCRIPTION="Next-generation maximum-likelihood inference of phylogenetic trees"
 HOMEPAGE="https://github.com/amkozlov/raxml-ng"
 EGIT_REPO_URI="https://github.com/amkozlov/${PN}.git"
 
-inherit cmake-utils git-r3
+inherit cmake git-r3
 
 LICENSE="AGPL-3"
 SLOT="0"
