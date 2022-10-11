@@ -3,8 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{7..10} )
-DISTUTILS_USE_SETUPTOOLS=pyproject.toml
+PYTHON_COMPAT=( python3_{7..11} )
+DISTUTILS_USE_PEP517=poetry
 inherit distutils-r1 optfeature
 
 DESCRIPTION="Maintain Cookiecutter cruft"

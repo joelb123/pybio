@@ -25,7 +25,7 @@ BDEPEND="
 	)
 	"
 RDEPEND="${BDEPEND}
-	~dev-python/poetry-core-1.2.0[${PYTHON_USEDEP}]
+	~dev-python/poetry-core-1.3.2[${PYTHON_USEDEP}]
 	>=dev-python/poetry-plugin-export-1.0.7[${PYTHON_USEDEP}]
 	>=dev-python/cachecontrol-0.12.9[${PYTHON_USEDEP}]
 	>=dev-python/cachy-0.3.0[${PYTHON_USEDEP}]
@@ -38,7 +38,6 @@ RDEPEND="${BDEPEND}
 	>=dev-python/pexpect-4.7.0[${PYTHON_USEDEP}]
 	>=dev-python/pkginfo-1.5[${PYTHON_USEDEP}]
 	>=dev-python/platformdirs-2.5.2[${PYTHON_USEDEP}]
-	~dev-python/poetry-core-1.2.0[${PYTHON_USEDEP}]
 	>=dev-python/requests-2.18[${PYTHON_USEDEP}]
 	>=dev-python/requests-toolbelt-0.9.1[${PYTHON_USEDEP}]
 	>=dev-python/shellingham-1.5[${PYTHON_USEDEP}]
