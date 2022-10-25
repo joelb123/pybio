@@ -1,14 +1,14 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{7..10} )
+PYTHON_COMPAT=( python3_{8..11} )
 
 inherit distutils-r1
 
 DESCRIPTION="Python support for SAM/BAM/Bowtie/FASTA/Q/GFF/GTF files"
-HOMEPAGE="https://htseq.readthedocs.io/"
+HOMEPAGE="https://htseq.readthedocs.io https://github.com/htseq/htseq"
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
@@ -25,9 +25,9 @@ SLOT="0"
 
 RDEPEND="
 	dev-python/numpy[${PYTHON_USEDEP}]
-	dev-python/matplotlib[${PYTHON_USEDEP}]
 	sci-biology/pysam[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 BDEPEND="
 	>=dev-lang/swig-3.0.8
 	dev-python/cython[${PYTHON_USEDEP}]"
+RESTRICT="test"

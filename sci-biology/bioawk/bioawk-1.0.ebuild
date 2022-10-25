@@ -1,10 +1,8 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=7
-
-inherit eutils
+EAPI=8
 
 DESCRIPTION="Awk extended with sequence file support"
 HOMEPAGE="https://github.com/lh3/bioawk"

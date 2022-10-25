@@ -1,10 +1,10 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=7
+EAPI=8
 
-inherit eutils bash-completion-r1
+inherit bash-completion-r1
 
 DESCRIPTION="Command line utilities for tabular data files"
 HOMEPAGE="https://ebay.github.io/tsv-utils https://github.com/eBay/tsv-utils"
@@ -32,9 +32,8 @@ src_install() {
 	dobin ${FILESDIR}/tsv-header
 	dobin ${FILESDIR}/tsv-sort
     dodoc README.md LICENSE.txt NOTICES.txt
-	dobashcomp bash_completion/${PN}
 	bashcomp_alias  \
 		${PN} \
 		csv2tsv number-lines tsv-append tsv-filter tsv-join \
-		tsv-pretty tsv-sample tsv-select tsv-summarize tsv-uniq
+		tsv-pretty tsv-sample tsv-select tsv-split tsv-summarize tsv-uniq
 }

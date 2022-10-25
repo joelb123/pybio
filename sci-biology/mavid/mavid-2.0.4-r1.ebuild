@@ -1,4 +1,4 @@
-EAPI="7"
+EAPI=8
 DESCRIPTION="Multiple alignment of large DNA sequences"
 HOMEPAGE="https://baboon.math.berkeley.edu/mavid/"
 SRC_URI="https://bio.math.berkeley.edu/mavid/download/mavid-package-${PV}.tar.gz"

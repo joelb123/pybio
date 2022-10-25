@@ -1,10 +1,10 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{6..10} )
+PYTHON_COMPAT=( python3_{8..11} )
 
 inherit distutils-r1
 
@@ -20,7 +20,7 @@ IUSE=""
 RDEPEND="sci-biology/bedtools"
 DEPEND="${RDEPEND}
 	dev-python/cython[${PYTHON_USEDEP}]"
-
+RESTRICT="test"
 
 python_compile() {
 	${EPYTHON} setup.py cythonize || die
