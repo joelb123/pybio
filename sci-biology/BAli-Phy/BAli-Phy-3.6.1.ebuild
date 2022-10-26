@@ -1,8 +1,6 @@
-# Copyright 1999-2015 Gentoo Foundation
-# Distributed under the terms of the GNU General Public License v2
-# $Id$
+# Copyright 1999-2022 Gentoo Foundation
 
-EAPI=7
+EAPI=8
 
 inherit meson ninja-utils
 

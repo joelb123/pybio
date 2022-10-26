@@ -1,7 +1,7 @@
-# Copyright 1999-2019 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DESCRIPTION="Next-generation maximum-likelihood inference of phylogenetic trees"
 HOMEPAGE="https://github.com/amkozlov/raxml-ng"

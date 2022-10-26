@@ -1,5 +1,5 @@
-EAPI=7
-PYTHON_COMPAT=( python3_{6..9} )
+EAPI=8
+PYTHON_COMPAT=( python3_{8..11} )
 
 inherit cmake
 

@@ -3,6 +3,10 @@
 
 EAPI=8
 
+LUA_COMPAT=( lua5-{1..4} luajit )
+
+inherit lua-single
+
 DESCRIPTION="Tools for bioinformatics (Tallymer, Readjoiner, gff3validator, ...)"
 HOMEPAGE="https://genometools.org"
 SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
@@ -13,6 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="cairo"
 
 DEPEND="
+	${LUA_DEPS}
 	dev-libs/glib
 	cairo? ( x11-libs/cairo x11-libs/pango )
 	sci-biology/samtools
@@ -20,7 +25,7 @@ DEPEND="
 	dev-lang/lua
 	dev-lua/lpeg
 	dev-lua/luafilesystem
-	dev-lua/lua-md5
+	dev-lua/md5
 	dev-lang/luajit
 	dev-libs/tre
 	sys-libs/zlib
@@ -28,18 +33,18 @@ DEPEND="
 	dev-libs/expat
 	sci-libs/htslib
 	"
+BDEPEND="virtual/pkgconfig"
 RDEPEND="${DEPEND}"
+RESTRICT="test"
+PATCHES=( "${FILESDIR}"/1.6.2-system-lua.patch )
 
-src_prepare(){
-	sed -e "s#/usr/local#"${EPREFIX}"/usr#g" -i Makefile || die
-	#sed -e "s#/usr/include/bam#${EPREFIX}/usr/include/bam-0.1-legacy#" -i Makefile || die
-	#sed -e "s#-lbam#-lbam-0.1-legacy#" -i Makefile || die
-	eapply_user
+pkg_setup() {
+	lua-single_pkg_setup
 }
 
+
 src_compile(){
-	#local myemakeargs=( useshared=yes )
+	local myemakeargs=( useshared=yes errorcheck=no )
 	! use cairo && myemakeargs+=( cairo=no )
-	use x86 && myemakeargs+=( 32bit=yes 64bit=no )
 	emake ${myemakeargs}
 }

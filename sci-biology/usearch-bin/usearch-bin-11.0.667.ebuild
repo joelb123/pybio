@@ -1,4 +1,4 @@
-EAPI=7
+EAPI=8
 
 DESCRIPTION="High-throughput biological sequence analysis"
 HOMEPAGE="https://www.drive5.com/usearch"

@@ -1,10 +1,10 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="7"
+EAPI=8
 
-inherit eutils flag-o-matic autotools
+inherit flag-o-matic autotools
 
 MY_PV="4.0.0beta2"
 DESCRIPTION="A rapid whole genome aligner"

@@ -12,7 +12,7 @@ EGIT_REPO_URI="https://github.com/iqtree/iqtree2.git"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+#KEYWORDS="~amd64"
 IUSE=""
 PATCHES=( "${FILESDIR}"/2.2.0.8-system-yaml-mygsl.patch )
 

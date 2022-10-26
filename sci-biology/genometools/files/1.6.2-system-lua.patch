@@ -1,0 +1,97 @@
+diff --git a/Makefile b/Makefile
+index 30589b7..b91b62d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -33,27 +33,18 @@ ifeq ($(useshared),yes)
+     DEPLIBS:=-lbz2 \
+              $(shell $(OVERRIDE_PC_PATH) pkg-config --libs zlib) \
+              $(shell $(OVERRIDE_PC_PATH) pkg-config --libs expat) \
+-             $(shell $(OVERRIDE_PC_PATH) pkg-config --libs lua-5.1) \
+-             $(shell $(OVERRIDE_PC_PATH) pkg-config --libs lua5.1-lpeg) \
+-             $(shell $(OVERRIDE_PC_PATH) pkg-config --libs lua5.1-md5) \
+-             $(shell $(OVERRIDE_PC_PATH) pkg-config --libs lua5.1-filesystem) \
+-             $(shell $(OVERRIDE_PC_PATH) pkg-config --libs lua5.1-des56) \
+-             -lbam \
++             $(shell $(OVERRIDE_PC_PATH) pkg-config --libs lua5.4) \
++             $(shell $(OVERRIDE_PC_PATH) pkg-config --libs htslib) \
+              $(shell $(OVERRIDE_PC_PATH) pkg-config --libs tre) \
+              -lm -lpthread
+     INCLUDEOPT+=$(shell $(OVERRIDE_PC_PATH) pkg-config --cflags zlib) \
+                 $(shell $(OVERRIDE_PC_PATH) pkg-config --cflags expat) \
+-                $(shell $(OVERRIDE_PC_PATH) pkg-config --cflags lua-5.1) \
+-                $(shell $(OVERRIDE_PC_PATH) pkg-config --cflags lua5.1-lpeg) \
+-                $(shell $(OVERRIDE_PC_PATH) pkg-config --cflags lua5.1-md5) \
+-                $(shell $(OVERRIDE_PC_PATH) pkg-config --cflags lua5.1-filesystem) \
+-                $(shell $(OVERRIDE_PC_PATH) pkg-config --cflags lua5.1-des56) \
++                $(shell $(OVERRIDE_PC_PATH) pkg-config --cflags lua5.4) \
+                 $(shell $(OVERRIDE_PC_PATH) pkg-config --cflags tre)
+   else
+     # Requested the use of shared libraries without having pkg-config.
+     # You are on your own.  Good luck.
+-    DEPLIBS:=-lbz2 -lz -lexpat -llua5.1-lpeg -llua5.1 -llua5.1-md5 \
+-             -llua5.1-filesystem -llua5.1-des56 -lbam -ltre -lm -lpthread
++    DEPLIBS:=-lbz2 -lz -lexpat -llua5.4  -lbam -ltre -lm -lpthread
+   endif
+ else
+   DEPLIBS:=
+@@ -542,7 +533,7 @@ ifneq ($(errorcheck),no)
+ endif
+ 
+ # set prefix for install target
+-prefix ?= /usr/local
++prefix ?= /usr
+ 
+ ifdef DESTDIR
+   prefix:=$(DESTDIR)$(prefix)
+diff --git a/src/extended/rcr.c b/src/extended/rcr.c
+index ba1549a..3095316 100644
+--- a/src/extended/rcr.c
++++ b/src/extended/rcr.c
+@@ -49,7 +49,7 @@
+ #include "extended/sam_alignment.h"
+ #include "extended/sam_query_name_iterator.h"
+ #include "extended/samfile_iterator.h"
+-#include <samtools/sam.h>
++#include <htslib/sam.h>
+ 
+ #define BAMBASEA 1
+ #define BAMBASEC 2
+diff --git a/src/extended/sam_alignment.c b/src/extended/sam_alignment.c
+index f88b3f8..5ce5d05 100644
+--- a/src/extended/sam_alignment.c
++++ b/src/extended/sam_alignment.c
+@@ -16,7 +16,7 @@
+   OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+ 
+-#include <samtools/sam.h>
++#include <htslib/sam.h>
+ #include "core/alphabet_api.h"
+ #include "core/ensure_api.h"
+ #include "core/ma_api.h"
+diff --git a/src/extended/sam_alignment_rep.h b/src/extended/sam_alignment_rep.h
+index 4269ce0..afebb36 100644
+--- a/src/extended/sam_alignment_rep.h
++++ b/src/extended/sam_alignment_rep.h
+@@ -23,7 +23,7 @@
+ /* The contents of this file is to be considered private implementation detail.
+ */
+ 
+-#include <samtools/sam.h>
++#include <htslib/sam.h>
+ #include "core/alphabet_api.h"
+ 
+ struct GtSamAlignment{
+diff --git a/src/extended/samfile_iterator.c b/src/extended/samfile_iterator.c
+index 03d686b..20c6ea9 100644
+--- a/src/extended/samfile_iterator.c
++++ b/src/extended/samfile_iterator.c
+@@ -15,7 +15,7 @@
+   OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+ 
+-#include <samtools/sam.h>
++#include <htslib/sam.h>
+ #include "core/cstr_api.h"
+ #include "core/ensure_api.h"
+ #include "core/error_api.h"

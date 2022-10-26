@@ -1,6 +1,6 @@
-EAPI="7"
+EAPI=8
 
-inherit eutils autotools
+inherit  autotools
 
 DESCRIPTION="Estimate phylogenetic distance of related genomes"
 HOMEPAGE="https://github.com/evolbioinf/andi/"

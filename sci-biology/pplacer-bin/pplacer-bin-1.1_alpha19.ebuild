@@ -1,4 +1,4 @@
-EAPI=7
+EAPI=8
 
 DESCRIPTION="Maximum-likelihood placement of query sequences on a fixed reference tree"
 HOMEPAGE="https://matsen.fhcrc.org/pplacer/"
