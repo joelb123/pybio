@@ -14,7 +14,7 @@ LICENSE="GPL-2"
 SLOT="0"
 #KEYWORDS="~amd64"
 IUSE=""
-PATCHES=( "${FILESDIR}"/2.2.0.8-system-yaml-mygsl.patch )
+PATCHES=( "${FILESDIR}"/2.2.2.1-system-yaml-mygsl.patch )
 
 RDEPEND="
 	dev-cpp/eigen

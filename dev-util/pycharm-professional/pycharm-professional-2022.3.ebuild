@@ -58,18 +58,10 @@ src_prepare() {
 	default
 	local remove_me=(
 		help/ReferenceCardForMac.pdf
-		lib/pty4j-native/linux/aarch64
-		lib/pty4j-native/linux/arm
-		lib/pty4j-native/linux/mips64el
-		lib/pty4j-native/linux/ppc64le
-		lib/pty4j-native/linux/$(usex amd64 x86 x86_64)
-		plugins/remote-dev-server/selfcontained
-		plugins/performanceTesting/bin/libyjpagent.so
-		plugins/performanceTesting/bin/*.dll
-		plugins/performanceTesting/bin/libyjpagent.dylib
+		lib/pty4j/linux/x86-64
+		plugins/performanceTesting/bin/libyjpagent64.so
 		plugins/python/helpers/pydev/pydevd_attach_to_process/attach_linux_x86.so
 		plugins/python/helpers/pydev/pydevd_attach_to_process/attach_linux_amd64.so
-		plugins/wsl-fs-helper
 	)
 
 	rm -rv "${remove_me[@]}" || die

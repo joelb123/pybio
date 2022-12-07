@@ -14,15 +14,17 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
+inherit cmake
+
 LICENSE="MIT"
 SLOT="0"
 IUSE="static-libs test"
 RESTRICT="!test? ( test )"
 
-src_install() {
-	emake DESTDIR="${ED}" PREFIX=/usr LIBDIR="/usr/$(get_libdir)" install
-	if ! use static-libs; then
-		find "${ED}" -name '*.a' -delete || die
-	fi
-	dodoc README.md
-}
+#src_install() {
+#	emake DESTDIR="${ED}" PREFIX=/usr LIBDIR="/usr/$(get_libdir)" install
+#	if ! use static-libs; then
+#		find "${ED}" -name '*.a' -delete || die
+#	fi
+#	dodoc README.md
+#}
