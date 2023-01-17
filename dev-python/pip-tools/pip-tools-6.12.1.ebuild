@@ -18,9 +18,13 @@ IUSE="doc test"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		test? ( dev-python/nose[${PYTHON_USEDEP}] )
 		doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )"
-DISTUTILS_USE_SETUPTOOLS=rdepend
+DISTUTILS_USE_PEP517=setuptools
+PATCHES=(
+	"${FILESDIR}/pip-tools-6.12.0-exclude-examples.patch"
+)
 
 python_compile_all() {
+	rm -r tests
 	use doc && emake -C docs html
 }
 

@@ -25,14 +25,15 @@ BDEPEND="
 	)
 	"
 RDEPEND="${BDEPEND}
-	~dev-python/poetry-core-1.3.2[${PYTHON_USEDEP}]
+	~dev-python/poetry-core-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/poetry-plugin-export-1.0.7[${PYTHON_USEDEP}]
 	>=dev-python/cachecontrol-0.12.9[${PYTHON_USEDEP}]
 	>=dev-python/cachy-0.3.0[${PYTHON_USEDEP}]
-	>=dev-python/cleo-1.0.0_alpha5[${PYTHON_USEDEP}]
+	>=dev-python/cleo-2.0.0[${PYTHON_USEDEP}]
 	>=dev-python/clikit-0.6.2[${PYTHON_USEDEP}]
 	>=dev-python/crashtest-0.3.0[${PYTHON_USEDEP}]
 	>=dev-python/html5lib-1.0[${PYTHON_USEDEP}]
+	>=dev-python/jsonschema-4.10[${PYTHON_USEDEP}]
 	>=dev-python/keyring-21.2.0[${PYTHON_USEDEP}]
 	>=dev-python/packaging-21.3[${PYTHON_USEDEP}]
 	>=dev-python/pexpect-4.7.0[${PYTHON_USEDEP}]
@@ -42,7 +43,9 @@ RDEPEND="${BDEPEND}
 	>=dev-python/requests-toolbelt-0.9.1[${PYTHON_USEDEP}]
 	>=dev-python/shellingham-1.5[${PYTHON_USEDEP}]
 	>=dev-python/setuptools-60.4[${PYTHON_USEDEP}]
+	>=dev-python/tomli-2.0.1[${PYTHON_USEDEP}]
 	>=dev-python/tomlkit-0.11.1[${PYTHON_USEDEP}]
+	>=dev-python/trove-classifiers-2022.5.19[${PYTHON_USEDEP}]
 	>=dev-python/virtualenv-20.11[${PYTHON_USEDEP}]
 	>=dev-python/urllib3-1.26.0[${PYTHON_USEDEP}]
 	>=dev-python/dulwich-0.20.46[${PYTHON_USEDEP}]

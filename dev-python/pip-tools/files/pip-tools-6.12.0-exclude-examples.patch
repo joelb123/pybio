@@ -1,0 +1,12 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 340b442..99c71ef 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -106,6 +106,6 @@ markers = ["network: mark tests that require internet access"]
+ 
+ [tool.setuptools.packages.find]
+ # needed only because we did not adopt src layout yet
+-exclude = ["img"]
++exclude = ["img", "examples", "tests", "test_data"]
+ 
+ [tool.setuptools_scm]
