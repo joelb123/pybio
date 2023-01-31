@@ -14,7 +14,7 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="
-		app-text/pandoc
+		virtual/pandoc
 		dev-libs/boost
 		dev-cpp/eigen
 		dev-cpp/nlohmann_json
@@ -31,7 +31,7 @@ DEPEND="
 		x11-libs/cairo
 "
 RDEPEND="${DEPEND}"
-
+PATCHES=( "${FILESDIR}/3.6.1-bitset.patch" )
 
 src_configure(){
 	git clone https://gitlab.com/testiphy/testiphy.git

@@ -1,0 +1,12 @@
+diff --git a/src/dp/hmm.cc b/src/dp/hmm.cc
+index 8be51b5..ea8a15e 100644
+--- a/src/dp/hmm.cc
++++ b/src/dp/hmm.cc
+@@ -24,6 +24,7 @@
+ ///
+ 
+ #include <cmath>
++#include <bitset>
+ #include "hmm.H"
+ #include "2way.H"
+ #include "imodel/imodel.H"
