@@ -1,0 +1,20 @@
+diff --git a/alignment/CMakeLists.txt b/alignment/CMakeLists.txt
+index 5ac57103..1742d3fd 100644
+--- a/alignment/CMakeLists.txt
++++ b/alignment/CMakeLists.txt
+@@ -23,4 +23,4 @@ sequencechunkstr.cpp
+ sequencechunkstr.h
+ )
+ 
+-target_link_libraries(alignment simulator ncl gsl model)
++target_link_libraries(alignment)
+diff --git a/simulator/CMakeLists.txt b/simulator/CMakeLists.txt
+index 2a7af62a..29dd712f 100644
+--- a/simulator/CMakeLists.txt
++++ b/simulator/CMakeLists.txt
+@@ -4,4 +4,4 @@ alisimulatorinvar.cpp alisimulatorinvar.h
+ alisimulatorheterogeneity.cpp alisimulatorheterogeneity.h
+ alisimulatorheterogeneityinvar.cpp alisimulatorheterogeneityinvar.h
+ )
+-target_link_libraries(simulator alignment ncl gsl model)
++target_link_libraries(simulator)

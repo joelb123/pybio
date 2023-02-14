@@ -17,7 +17,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-l
 IUSE="test"
 BDEPEND="
 	dev-python/python-memcached[${PYTHON_USEDEP}]
-	dev-python/redis-py[${PYTHON_USEDEP}]
+	dev-python/redis[${PYTHON_USEDEP}]
 	dev-python/msgpack[${PYTHON_USEDEP}]
 	test? ( dev-python/pytest[${PYTHON_USEDEP}] )
 "
