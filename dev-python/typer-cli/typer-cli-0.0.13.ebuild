@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
+DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{8..11} )
 
 inherit distutils-r1 bash-completion-r1
 
 DESCRIPTION="Run Typer scripts with completion, without having to create a package.."
 HOMEPAGE="https://typer.tiangolo.com/typer-cli https://github.com/tiangolo/typer-cli"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+SRC_URI="https://github.com/tiangolo/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -17,13 +17,14 @@ KEYWORDS="~amd64 ~arm64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="test"
 
 RDEPEND="${BDEPEND}
-	>=dev-python/typer-0.3.0[${PYTHON_USEDEP}]
-	>=dev-python/importlib_metadata-1.5[${PYTHON_USEDEP}]
+	>=dev-python/typer-0.4.0[${PYTHON_USEDEP}]
+	>=dev-python/colorama-0.4.3[${PYTHON_USEDEP}]
+	>=dev-python/shellingham-1.3.2[${PYTHON_USEDEP}]
 "
 
-PATCHES=(
-	"${FILESDIR}"/${PN}-rename_script.patch
-)
+#PATCHES=(
+#	"${FILESDIR}"/${PN}-rename_script.patch
+#)
 
 distutils_enable_tests	pytest
 
