@@ -19,8 +19,8 @@ IUSE="test"
 
 BDEPEND="
 	test? (
+	    dev-python/cachy[${PYTHON_USEDEP}]
 		dev-python/deepdiff[${PYTHON_USEDEP}]
-		dev-python/flatdict[${PYTHON_USEDEP}]
 		dev-python/httpretty[${PYTHON_USEDEP}]
 		dev-python/pytest[${PYTHON_USEDEP}]
 		dev-python/pytest-cov[${PYTHON_USEDEP}]
@@ -31,20 +31,22 @@ BDEPEND="
 	)
 	"
 RDEPEND="${BDEPEND}
-	~dev-python/poetry-core-1.4.0[${PYTHON_USEDEP}]
-	>=dev-python/poetry-plugin-export-1.2.0[${PYTHON_USEDEP}]
+	~dev-python/poetry-core-1.5.2[${PYTHON_USEDEP}]
+	>=dev-python/poetry-plugin-export-1.3.0[${PYTHON_USEDEP}]
+	>=dev-python/build-0.10.0[${PYTHON_USEDEP}]
 	>=dev-python/cachecontrol-0.12.9[${PYTHON_USEDEP}]
-	>=dev-python/cachy-0.3.0[${PYTHON_USEDEP}]
 	>=dev-python/cleo-2.0.0[${PYTHON_USEDEP}]
 	>=dev-python/crashtest-0.4.1[${PYTHON_USEDEP}]
-	>=dev-python/dulwich-0.20.50[${PYTHON_USEDEP}]
+	>=dev-python/dulwich-0.21.2[${PYTHON_USEDEP}]
+	>=dev-python/filelock-3.8.0[${PYTHON_USEDEP}]
 	>=dev-python/html5lib-1.0[${PYTHON_USEDEP}]
+	>=dev-python/installer-0.6.0[${PYTHON_USEDEP}]
 	>=dev-python/jsonschema-4.10[${PYTHON_USEDEP}]
 	>=dev-python/keyring-23.9.0[${PYTHON_USEDEP}]
 	>=dev-python/lockfile-0.12.2[${PYTHON_USEDEP}]
 	>=dev-python/packaging-20.4[${PYTHON_USEDEP}]
 	>=dev-python/pexpect-4.7.0[${PYTHON_USEDEP}]
-	>=dev-python/pkginfo-1.5[${PYTHON_USEDEP}]
+	>=dev-python/pkginfo-1.9.4[${PYTHON_USEDEP}]
 	>=dev-python/platformdirs-2.5.2[${PYTHON_USEDEP}]
 	>=dev-python/requests-2.18[${PYTHON_USEDEP}]
 	>=dev-python/requests-toolbelt-0.9.1[${PYTHON_USEDEP}]
@@ -52,7 +54,7 @@ RDEPEND="${BDEPEND}
 	>=dev-python/shellingham-1.5[${PYTHON_USEDEP}]
 	>=dev-python/setuptools-60.4[${PYTHON_USEDEP}]
 	>=dev-python/tomli-2.0.1[${PYTHON_USEDEP}]
-	>=dev-python/tomlkit-0.11.1[${PYTHON_USEDEP}]
+	>=dev-python/tomlkit-0.11.6[${PYTHON_USEDEP}]
 	<=dev-python/tomlkit-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/trove-classifiers-2022.5.19[${PYTHON_USEDEP}]
 	>=dev-python/virtualenv-20.11[${PYTHON_USEDEP}]
