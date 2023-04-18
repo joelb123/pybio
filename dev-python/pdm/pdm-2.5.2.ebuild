@@ -3,8 +3,8 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=pdm
-PYTHON_COMPAT=( python3_{10..11} pypy3 )
+DISTUTILS_USE_PEP517=pdmb
+PYTHON_COMPAT=( python3_{10..11} )
 
 inherit bash-completion-r1 distutils-r1 pypi
 
@@ -15,7 +15,7 @@ HOMEPAGE="
 "
 
 LICENSE="MIT"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 SLOT="0"
 
 RDEPEND="
@@ -30,9 +30,10 @@ RDEPEND="
 	dev-python/unearth[${PYTHON_USEDEP}]
 	dev-python/findpython[${PYTHON_USEDEP}]
 	dev-python/tomlkit[${PYTHON_USEDEP}]
+	<dev-python/tomlkit-1[${PYTHON_USEDEP}]
 	dev-python/shellingham[${PYTHON_USEDEP}]
 	dev-python/python-dotenv[${PYTHON_USEDEP}]
-	<dev-python/resolvelib-1.0.0[${PYTHON_USEDEP}]
+	>=dev-python/resolvelib-1.0.1[${PYTHON_USEDEP}]
 	dev-python/installer[${PYTHON_USEDEP}]
 	dev-python/cachecontrol[${PYTHON_USEDEP}]
 

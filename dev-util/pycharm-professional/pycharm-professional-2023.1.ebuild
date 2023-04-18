@@ -59,7 +59,7 @@ src_prepare() {
 	local remove_me=(
 		help/ReferenceCardForMac.pdf
 		lib/pty4j/linux/x86-64
-		plugins/performanceTesting/bin/libyjpagent64.so
+		plugins/performanceTesting-yourkit/bin/libyjpagent64.so
 		plugins/python/helpers/pydev/pydevd_attach_to_process/attach_linux_x86.so
 		plugins/python/helpers/pydev/pydevd_attach_to_process/attach_linux_amd64.so
 	)
