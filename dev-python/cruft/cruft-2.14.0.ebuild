@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_{10..11} )
 DISTUTILS_USE_PEP517=poetry
 inherit distutils-r1 optfeature
 
@@ -21,7 +21,6 @@ RDEPEND="
 	dev-python/typer[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
 	dev-python/pyparsing[${PYTHON_USEDEP}]
-	dev-python/importlib_metadata[${PYTHON_USEDEP}]
 	>=dev-util/cookiecutter-1.6[${PYTHON_USEDEP}]
 "
 BDEPEND="
