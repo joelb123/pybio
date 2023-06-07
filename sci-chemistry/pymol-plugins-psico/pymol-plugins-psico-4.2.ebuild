@@ -4,7 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{10..11} )
-DISTUTILS_USE_PEP517=setuptools
+DISTUTILS_USE_PEP517=no
 RESTRICT="test"
 
 inherit distutils-r1 optfeature
@@ -26,6 +26,28 @@ RDEPEND="
     sci-chemistry/pymol[${PYTHON_USEDEP}]
 "
 
-pkg_post_inst() {
-	optfeature sci-libs/mmtk "Normal modes via mmtk"
+python_compile() {
+    python_domodule psico 
+}
+
+pkg_postinst() {
+	optfeature "secondary structure assignment" sci-chemistry/dssp
+	optfeature "alternate sec structure assignment" sci-biology/stride
+	optfeature "maximum-likelihood superpositioning" sci-chemistry/theseus
+	optfeature "Delaunay triangularization" media-libs/qhull
+	optfeature "movie creation" media-video/mplayer
+	optfeature "normal modes" sci-chemistry/pdbmat
+	optfeature "chemoinformatics" sci-chemistry/rdkit
+	optfeature "eigenvector calculation" sci-mathematics/diagrtb
+	optfeature "surface calculation" sci-chemistry/msms-bin
+	# TMscore
+	# MMTK - ancient
+	# CSB - also ancient
+	# prody - still ancient
+	# indigo - no build
+	# DynDom - no build
+	# apbs - no build, license
+	# pdb2pqr - ancient, no build
+	# prosmart - no build
+	# p_sstruc3 - no build
 }
