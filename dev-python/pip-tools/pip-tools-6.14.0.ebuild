@@ -1,14 +1,15 @@
-# Copyright 1999-2023 Gentoo Foundation
+# Copyright 2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{10..11} )
+PYTHON_COMPAT=( python3_{10..12} )
 
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="A set of tools to keep your pinned Python dependencies fresh."
-HOMEPAGE="https://pypi.python.org/pypi/pip-tools"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+HOMEPAGE="https://pypi.python.org/project/pip-tools"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN}" "${PV}")"
+S="${WORKDIR}/${P}"
 
 LICENSE="MIT"
 SLOT="0"

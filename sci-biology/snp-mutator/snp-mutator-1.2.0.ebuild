@@ -1,12 +1,13 @@
 EAPI=8
-PYTHON_COMPAT=( python3_{10..11} )
+PYTHON_COMPAT=( python3_{10..12} )
 
-inherit distutils-r1
+inherit distutils-r1 pypi
 
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 DESCRIPTION="Generate mutated sequence files from a reference genome."
-HOMEPAGE="https://github.com/CFSAN-Biostatistics/snp-mutator"
+HOMEPAGE="https://github.com/CFSAN-Biostatistics/snp-mutator https://pypi.org/project/snp-mutator"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN}" "${PV}")"
 LICENSE="BSD"
+S="${WORKDIR}/${P}"
 
 SLOT="0"
 KEYWORDS="~amd64 ~x86"

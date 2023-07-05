@@ -1,15 +1,15 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..11} )
+PYTHON_COMPAT=( python3_{10..12} )
 DISTUTILS_USE_SETUPTOOLS=rdepend
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="generate consensus sequence logo figures"
-HOMEPAGE="http://weblogo.threeplusone.com/ https://github.com/WebLogo/weblogo"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+HOMEPAGE="http://weblogo.threeplusone.com/ https://github.com/WebLogo/weblogo https://pypi.org/project/weblogo"
+SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 
 LICENSE="MIT"
 SLOT="0"

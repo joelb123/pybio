@@ -3,13 +3,13 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..11} )
+PYTHON_COMPAT=( python3_{10..12} )
 DISTUTILS_USE_PEP517=poetry
-inherit distutils-r1 optfeature
+inherit distutils-r1 optfeature pypi
 
 DESCRIPTION="Maintain Cookiecutter cruft"
-HOMEPAGE="https://github.com/cruft/cruft/"
-SRC_URI="mirror://pypi/${P:0:1}/${PN}/${P}.tar.gz"
+HOMEPAGE="https://github.com/cruft/cruft/ https://pypi.org/project/cruft"
+SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 
 LICENSE="MIT"
 SLOT="0"

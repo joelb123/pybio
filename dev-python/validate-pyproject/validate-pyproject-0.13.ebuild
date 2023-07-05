@@ -1,22 +1,20 @@
-# Copyright 2022-2023 Gentoo Authors
+# Copyright 2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{10..11} pypy3 )
+PYTHON_COMPAT=( python3_{10..12} pypy3 )
 
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="Validation library and CLI tool for pyproject files"
 HOMEPAGE="
 	https://github.com/abravalheri/validate-pyproject/
 	https://pypi.org/project/validate-pyproject/
 "
-SRC_URI="
-	https://github.com/abravalheri/validate-pyproject/archive/refs/tags/v${PV}.tar.gz
-		-> ${P}.gh.tar.gz
-"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN}" "${PV}")"
+S="${WORKDIR}/${P}"
 
 LICENSE="Mozilla-2.0"
 SLOT="0"
