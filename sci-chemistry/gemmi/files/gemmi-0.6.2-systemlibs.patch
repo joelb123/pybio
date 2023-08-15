@@ -1,0 +1,68 @@
+diff --git a/MANIFEST.in b/MANIFEST.in
+index 348670e..96f32e6 100644
+--- a/MANIFEST.in
++++ b/MANIFEST.in
+@@ -1,10 +1,7 @@
+ include python/*.h*
+ recursive-include include/gemmi *.hpp
+ include include/gemmi/third_party/fast_float.h
+-include include/gemmi/third_party/pocketfft_hdronly.h
+ include include/gemmi/third_party/sajson.h
+-graft   include/gemmi/third_party/tao
+ include include/gemmi/third_party/tinydir.h
+ include third_party/stb_sprintf.h
+-include third_party/zlib/*
+ include LICENSE.txt README.md
+diff --git a/include/gemmi/cif.hpp b/include/gemmi/cif.hpp
+index 124aae6..33f6a8c 100644
+--- a/include/gemmi/cif.hpp
++++ b/include/gemmi/cif.hpp
+@@ -10,8 +10,7 @@
+ #include <iosfwd>     // for size_t, istream
+ #include <string>
+ 
+-#include "third_party/tao/pegtl.hpp"
+-//#include "third_party/tao/pegtl/contrib/tracer.hpp"  // for debugging
++#include <tao/pegtl.hpp>
+ 
+ #include "cifdoc.hpp" // for Document, etc
+ #include "input.hpp"  // for CharArray
+diff --git a/include/gemmi/fourier.hpp b/include/gemmi/fourier.hpp
+index f4fc2ed..507f1c5 100644
+--- a/include/gemmi/fourier.hpp
++++ b/include/gemmi/fourier.hpp
+@@ -16,7 +16,7 @@
+ # define POCKETFFT_CACHE_SIZE 0
+ #endif
+ #define POCKETFFT_NO_MULTITHREADING
+-#include "third_party/pocketfft_hdronly.h"
++#include <pocketfft_hdronly.h>
+ 
+ namespace gemmi {
+ 
+diff --git a/python/gemmi.cpp b/python/gemmi.cpp
+index 2900b4c..8840d3e 100644
+--- a/python/gemmi.cpp
++++ b/python/gemmi.cpp
+@@ -6,7 +6,7 @@
+ #include "gemmi/pdb_id.hpp"    // for expand_if_pdb_code
+ #include "gemmi/bessel.hpp"    // for bessel_i1_over_i0
+ #include "gemmi/stats.hpp"     // for Correlation
+-#include "gemmi/third_party/tao/pegtl/parse_error.hpp" // for parse_error
++#include <tao/pegtl/parse_error.hpp> // for parse_error
+ 
+ #include "common.h"
+ #include <pybind11/stl.h>
+diff --git a/setup.py b/setup.py
+index 060d97d..3878081 100644
+--- a/setup.py
++++ b/setup.py
+@@ -8,7 +8,7 @@ from setuptools import distutils
+ import os
+ import sys
+ 
+-USE_SYSTEM_ZLIB = False
++USE_SYSTEM_ZLIB = True
+ MIN_PYBIND_VER = '2.6.2'
+ 
+ def read_version_from_header():

@@ -1,0 +1,43 @@
+diff --git a/setup.py b/setup.py
+index aa2d54a..ae40302 100644
+--- a/setup.py
++++ b/setup.py
+@@ -43,22 +43,18 @@ extra_compile_args = [march_flag,
+ include_dirs = [
+     # Path to pybind11 headers
+     get_pybind_include(),
+-    get_pybind_include(user=True),
+-    "../",
+-    "../libpopcnt",
+-    "../include",
+-    "../include/vec",
+-    "../include/blaze",
+-    "../..",
+-    "../pybind11/include"
++    "./libpopcnt",
++    "./include",
++    "./include/vec",
++    "./include/blaze",
++    "./",
+ ]
+ 
+-__version__ = subprocess.check_output(
+-    ["git", "describe", "--abbrev=4"]).decode().strip().split('-')[0]
++__version__ = "0.18.1"
+ 
+ 
+ def make_namepair(name):
+-    return ('sketch_' + name, name + ".cpp")
++    return ('sketch_' + name, "python/" + name + ".cpp")
+ 
+ 
+ def make_module(namecppf):
+@@ -178,7 +174,7 @@ setup(
+     author='Daniel Baker',
+     author_email='dnb@cs.jhu.edu',
+     url='https://github.com/dnbaker/sketch',
+-    description='A python module for constructing and comparing sketches',
++    description='Constructing and comparing data sketches',
+     long_description='',
+     ext_modules=ext_modules,
+     install_requires=['pybind11>=2.4'],
