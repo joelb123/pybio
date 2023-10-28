@@ -1,10 +1,10 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=7
+EAPI=8
 
-inherit eutils
+#inherit eutils
 
 DESCRIPTION="Compute chains of syntenic genes"
 HOMEPAGE="https://dagchainer.sourceforge.net"
