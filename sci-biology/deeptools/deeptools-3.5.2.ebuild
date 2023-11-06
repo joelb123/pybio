@@ -21,7 +21,6 @@ RESTRICT="test"
 RDEPEND="
 	>=sci-biology/deeptools-intervals-0.1.8[${PYTHON_USEDEP}]
 	>=dev-python/numpy-1.9.0[${PYTHON_USEDEP}]
-	>=dev-python/numpydoc-0.5[${PYTHON_USEDEP}]
 	>=dev-python/scipy-0.17.0[${PYTHON_USEDEP}]
 	>=dev-python/plotly-2.0.0[${PYTHON_USEDEP}]
 	>=dev-python/py2bit-0.2.0[${PYTHON_USEDEP}]

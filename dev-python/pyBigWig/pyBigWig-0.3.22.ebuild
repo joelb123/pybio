@@ -5,6 +5,7 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{10..12} )
 DISTUTILS_USE_PEP517=setuptools
+DISTUTILS_EXT=1
 inherit distutils-r1
 
 DESCRIPTION="quick access to and creation of bigWig files"
@@ -23,3 +24,9 @@ SLOT="0"
 
 DEPEND="sci-biology/libBigWig"
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+        sed -e 's/, "setuptools_scm"//' -i pyproject.toml || die
+        sed -e 's/[tool.setuptools_scm]//' -i pyproject.toml || die
+		eapply_user
+}
