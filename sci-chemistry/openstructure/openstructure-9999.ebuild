@@ -6,7 +6,7 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{10..12} )
 
-inherit cmake distutils-r1 git-r3
+inherit cmake git-r3
 
 SLOT="0"
 DESCRIPTION="Openstructure.org structure characterization tools"
@@ -27,6 +27,8 @@ DEPEND="
 		media-libs/libpng
 		dev-db/sqlite
 		dev-python/numpy
+		dev-python/PyQt5
+		dev-python/sip
 		dev-util/meson
 		dev-util/ninja
 "
@@ -39,15 +41,15 @@ src_prepare() {
 
 src_configure() {
 	local emesonargs=(
-			-DENABLE_GFX=off
-			-DENABLE_INFO=off
+			-DENABLE_GFX=on
+			-DENABLE_INFO=on
 			-DCOMPILE_TMTOOLS=on
 			-DUSE_NUMPY=on
 			-DCOMPOUND_LIB=/tmp/openstructure
-			-DPYTHON_MODULE_PATH=/usr/lib/python3.11/site-packages
 	)
 	cmake_src_configure
 }
+			#-DPYTHON_MODULE_PATH=/usr/lib/python3.11/site-packages
 
 src_test() {
 	meson_src_test

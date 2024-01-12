@@ -1,0 +1,59 @@
+diff --git a/include/gemmi/cif.hpp b/include/gemmi/cif.hpp
+index fb5e869..420cc2d 100644
+--- a/include/gemmi/cif.hpp
++++ b/include/gemmi/cif.hpp
+@@ -10,7 +10,7 @@
+ #include <iosfwd>     // for size_t, istream
+ #include <string>
+ 
+-#include "third_party/tao/pegtl.hpp"
++#include <tao/pegtl.hpp>
+ //#include "third_party/tao/pegtl/contrib/tracer.hpp"  // for debugging
+ 
+ #include "cifdoc.hpp" // for Document, etc
+diff --git a/include/gemmi/fourier.hpp b/include/gemmi/fourier.hpp
+index 7a7163b..477f297 100644
+--- a/include/gemmi/fourier.hpp
++++ b/include/gemmi/fourier.hpp
+@@ -16,7 +16,7 @@
+ # define POCKETFFT_CACHE_SIZE 0
+ #endif
+ #define POCKETFFT_NO_MULTITHREADING
+-#include "third_party/pocketfft_hdronly.h"
++#include <pocketfft_hdronly.h>
+ 
+ namespace gemmi {
+ 
+diff --git a/pyproject.toml b/pyproject.toml
+index e032c93..a740bf7 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -46,7 +46,6 @@ sdist.include = [
+   "examples/*.cpp",
+   "include/gemmi/**/*.hpp",
+   "include/gemmi/third_party/*.h",
+-  "include/gemmi/third_party/tao/**",
+   "src/*.cpp",
+   "prog/*.cpp",
+   "prog/*.h*",
+@@ -54,7 +53,6 @@ sdist.include = [
+   "python/*.h*",
+   "third_party/README",
+   "third_party/*.h",
+-  "third_party/zlib/*",
+   "tests/*",
+   "!tests/*.pyc",
+   "tools/gemmi-config.cmake.in"
+diff --git a/python/gemmi.cpp b/python/gemmi.cpp
+index 47585de..6532708 100644
+--- a/python/gemmi.cpp
++++ b/python/gemmi.cpp
+@@ -8,7 +8,7 @@
+ #include "gemmi/pirfasta.hpp"  // for read_pir_or_fasta
+ #include "gemmi/seqtools.hpp"  // for calculate_sequence_weight
+ #include "gemmi/stats.hpp"     // for Correlation
+-#include "gemmi/third_party/tao/pegtl/parse_error.hpp" // for parse_error
++#include <tao/pegtl/parse_error.hpp> // for parse_error
+ 
+ #include "common.h"
+ #include <pybind11/stl.h>

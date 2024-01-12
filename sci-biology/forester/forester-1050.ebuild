@@ -3,7 +3,7 @@ EAPI=8
 inherit java-pkg-2
 
 DESCRIPTION="Visualization, Analysis, and Editing of Phylogenetic Trees"
-HOMEPAGE="httpis://sites.google.com/site/cmzmasek/home/software/archaeopteryx"
+HOMEPAGE="https://sites.google.com/site/cmzmasek/home/software/archaeopteryx"
 SRC_URI="https://www.phyloxml.org/download/${PN}/${PN}_${PV}.jar"
 
 LICENSE="GPL-2"
