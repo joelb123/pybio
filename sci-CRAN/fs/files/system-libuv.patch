@@ -1,0 +1,38 @@
+diff --git a/src/Makevars b/src/Makevars
+index 1067d94..afa5c36 100644
+--- a/src/Makevars
++++ b/src/Makevars
+@@ -2,7 +2,7 @@ UNAME := $(shell uname)
+ 
+ LIBUV := libuv-1.44.2
+ 
+-PKG_LIBS = ./$(LIBUV)/.libs/libuv.a -pthread
++PKG_LIBS = -luv -pthread
+ 
+ SOURCES = $(wildcard *.cc unix/*.cc)
+ OBJECTS = $(SOURCES:.cc=.o)
+@@ -23,22 +23,12 @@ endif
+ 
+ PKG_CPPFLAGS = -I./$(LIBUV)/include -I. -pthread
+ 
+-all: $(SHLIB)
+-
+-$(SHLIB): $(LIBUV)/.libs/libuv.a
+-
+-$(LIBUV)/Makefile:
+-	(cd $(LIBUV) \
+-	&& CC="$(CC)" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS) $(CPICFLAGS) $(C_VISIBILITY) -std=c99" AR="$(AR)" RANLIB="$(RANLIB)" LDFLAGS="$(LDFLAGS)" ./configure --quiet)
+-
+-$(LIBUV)/.libs/libuv.a: $(LIBUV)/Makefile
+-	$(MAKE) --directory=$(LIBUV) \
+-		HAVE_DTRACE=0
++all:
++	rm -r $(LIBUV)
+ 
+ .PHONY: shlib-clean clean
+ 
+ # shlib-clean: clean
+ 
+ clean:
+-	$(MAKE) --directory=$(LIBUV) distclean
+ 	rm -f $(OBJECTS)

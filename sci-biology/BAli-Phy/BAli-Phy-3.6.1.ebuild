@@ -20,8 +20,6 @@ DEPEND="
 		dev-cpp/nlohmann_json
 		dev-cpp/range-v3
 		dev-lang/ghc
-		dev-util/meson
-		dev-util/ninja
 		sci-visualization/gnuplot
 		dev-lang/R
 		dev-lang/perl

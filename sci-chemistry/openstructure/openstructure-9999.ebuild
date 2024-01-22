@@ -29,8 +29,7 @@ DEPEND="
 		dev-python/numpy
 		dev-python/PyQt5
 		dev-python/sip
-		dev-util/meson
-		dev-util/ninja
+		dev-build/meson
 "
 RDEPEND="${DEPEND}"
 RESTRICT="test"
@@ -49,7 +48,6 @@ src_configure() {
 	)
 	cmake_src_configure
 }
-			#-DPYTHON_MODULE_PATH=/usr/lib/python3.11/site-packages
 
 src_test() {
 	meson_src_test

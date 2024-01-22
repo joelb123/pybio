@@ -1,7 +1,7 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit multilib-build cmake llvm
 
@@ -12,32 +12,36 @@ S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="LLVM D Compiler"
 HOMEPAGE="https://github.com/ldc-developers/ldc"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~x86"
 LICENSE="BSD"
 SLOT="$(ver_cut 1-2)/$(ver_cut 3)"
 
 IUSE="static-libs"
 
-# We support LLVM 9.0 through 14.
-RDEPEND="dev-build/ninja
-		sys-devel/llvm
-	>=app-eselect/eselect-dlang-20140709"
-DEPEND="${RDEPEND}"
-LLVM_MAX_SLOT=15
+# Upstream supports LLVM 11.0 through 16.0.
+DEPEND="
+	|| (
+		sys-devel/llvm:17
+		sys-devel/llvm:16
+		sys-devel/llvm:15
+	)
+	<sys-devel/llvm-18:="
+IDEPEND=">=app-eselect/eselect-dlang-20140709"
+RDEPEND="
+	${DEPEND}
+	${IDEPEND}"
+
+LLVM_MAX_SLOT=17
 PATCHES="${FILESDIR}/ldc2-1.15.0-link-defaultlib-shared.patch"
 
 # For now, we support amd64 multilib. Anyone is free to add more support here.
 MULTILIB_COMPAT=( abi_x86_{32,64} )
 
 # Upstream supports "2.079-"
-DLANG_VERSION_RANGE="2.075-2.080 2.082-"
+DLANG_VERSION_RANGE="2.100-2.106"
 DLANG_PACKAGE_TYPE="single"
 
 inherit dlang
-
-detect_hardened() {
-	gcc --version | grep -o Hardened
-}
 
 src_prepare() {
 	cmake_src_prepare
@@ -46,15 +50,19 @@ src_prepare() {
 d_src_configure() {
 	# Make sure libphobos2 is installed into ldc2's directory.
 	export LIBDIR_${ABI}="${LIBDIR_HOST}"
+	# We disable assertions so we have to apply the same workaround as for
+	# sys-devel/llvm: add -DNDEBUG to CPPFLAGS.
+	local CPPFLAGS="${CPPFLAGS} -DNDEBUG"
 	local mycmakeargs=(
 		-DD_VERSION=2
 		-DCMAKE_INSTALL_PREFIX=/usr/lib/ldc2/$(ver_cut 1-2)
-		-DD_COMPILER="${DMD}"
+		-DD_COMPILER="${DMD} $(dlang_dmdw_dcflags)"
 		-DLDC_WITH_LLD=OFF
+		-DCOMPILE_D_MODULES_SEPARATELY=ON
+		-DLDC_ENABLE_ASSERTIONS=OFF
 	)
 	use static-libs && mycmakeargs+=( -DBUILD_SHARED_LIBS=BOTH ) || mycmakeargs+=( -DBUILD_SHARED_LIBS=ON )
 	use abi_x86_32 && use abi_x86_64 && mycmakeargs+=( -DMULTILIB=ON )
-	detect_hardened && mycmakeargs+=( -DADDITIONAL_DEFAULT_LDC_SWITCHES=' "-relocation-model=pic",' )
 	cmake_src_configure
 }
 
