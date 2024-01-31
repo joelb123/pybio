@@ -13,7 +13,7 @@ MY_P="ncbi-blast-${PV}+-src"
 # ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.3.0+-src.tar.gz
 
 DESCRIPTION="A subset of NCBI C++ Toolkit containing just the NCBI BLAST+"
-HOMEPAGE="https://ncbi.github.io/cxx-toolkit/"
+HOMEPAGE="https://ncbi.github.io/cxx-toolkit/ https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST"
 SRC_URI="
 	ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${PV}/${MY_P}.tar.gz"
 #	http://dev.gentoo.org/~jlec/distfiles/${PN}-${PV#0.}-asneeded.patch.xz"

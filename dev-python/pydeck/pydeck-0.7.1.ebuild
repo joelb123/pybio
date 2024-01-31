@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -17,7 +17,7 @@ EAPI=8
 #this frontend, as doing so appears to require the full deck.gl git repository.
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{8..12} )
+PYTHON_COMPAT=( python3_{10..12} )
 
 inherit distutils-r1 pypi
 
@@ -34,7 +34,6 @@ KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 # Note that Jinja2 appears to be required at build time, oddly. *shrug*
 BDEPEND="
 	>=dev-python/jinja-2.10.1[${PYTHON_USEDEP}]
-	>=dev-python/numpy-1.16.4[${PYTHON_USEDEP}]
 	test? (
 		dev-python/pandas[${PYTHON_USEDEP}]
 		dev-python/requests[${PYTHON_USEDEP}]
@@ -45,7 +44,6 @@ RDEPEND="
 	>=dev-python/ipykernel-5.1.2[${PYTHON_USEDEP}]
 	>=dev-python/ipywidgets-7.0.0[${PYTHON_USEDEP}]
 	>=dev-python/jinja-2.10.1[${PYTHON_USEDEP}]
-	>=dev-python/jupyter-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/numpy-1.16.4[${PYTHON_USEDEP}]
 	>=dev-python/traitlets-4.3.2[${PYTHON_USEDEP}]
 "
@@ -54,21 +52,31 @@ DEPEND="${RDEPEND}"
 distutils_enable_tests pytest
 
 python_prepare_all() {
+	#FIXME: *REMOVE THIS ENTIRE COMMAND ON THE NEXT PACKAGE BUMP.* Upstream has
+	#already resolved both of these issues.
+	# Patch the broken "pyproject.toml" as follows:
+	# * Replace the incorrect version with the current version.
+	# * Prepend the "requires =" setting with the mandatory "[build-system]".
+	sed -i \
+		-e "s~0.3.0~${PN}~" \
+		-e '4i [build-system]' \
+		pyproject.toml || die '"sed" failed.'
+
 	# Delete the line in "setup.py" erroneously installing a pydeck-specific
 	# configuration file to the non-standard "/usr/etc/" directory.
-	#sed -i -e '\~"etc/jupyter/nbconfig/notebook.d"~d' setup.py ||
-	# die '"sed" failed.'
+	sed -i -e '\~"etc/jupyter/nbconfig/notebook.d"~d' setup.py ||
+		die '"sed" failed.'
 
 	distutils-r1_python_prepare_all
 }
 
-python_install_all() {
-	[[ -d examples ]] && dodoc -r examples
-
-	# Install the pydeck-specific configuration file to the standard "/etc/"
-	# directory. See the related "sed" patch above.
-	insinto /etc/jupyter/nbconfig/notebook.d
-	doins pydeck.json
-
-	distutils-r1_python_install_all
-}
+#python_install_all() {
+#	[[ -d examples ]] && dodoc -r examples
+#
+#	# Install the pydeck-specific configuration file to the standard "/etc/"
+#	# directory. See the related "sed" patch above.
+#	insinto /etc/jupyter/nbconfig/notebook.d
+#	doins pydeck.json
+#
+#	distutils-r1_python_install_all
+#}
