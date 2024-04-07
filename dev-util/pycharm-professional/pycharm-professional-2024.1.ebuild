@@ -92,7 +92,6 @@ src_prepare() {
 	if use amd64; then
 		remove_me+=(
 			lib/async-profiler/aarch64
-			plugins/cwm-plugin/quiche-native/linux-aarch64
 		)
 	fi
 

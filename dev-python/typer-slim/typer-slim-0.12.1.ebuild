@@ -19,7 +19,7 @@ IUSE="test"
 
 BDEPEND="
 	>=dev-python/click-8.0[${PYTHON_USEDEP}]
-	dev-python/setuptools[${PYTHON_USEDEP}]
+	>=dev-python/typing-extensions-3.7.0[${PYTHON_USEDEP}]
 	test? (
 		dev-python/pytest[${PYTHON_USEDEP}]
 		dev-python/pytest-cov[${PYTHON_USEDEP}]
@@ -31,7 +31,7 @@ BDEPEND="
 	)
 "
 RDEPEND="${BDEPEND}
-	>=dev-python/colorama-0.4.3[${PYTHON_USEDEP}]
+	>=dev-python/rich-10.11.0[${PYTHON_USEDEP}]
 	>=dev-python/shellingham-1.3.0[${PYTHON_USEDEP}]
 "
 
