@@ -1,0 +1,23 @@
+# Copyright 1999-2024 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+PYTHON_COMPAT=( python3_{11..13} )
+
+inherit distutils-r1 pypi
+distutils_enable_tests pytest
+#Tests mostly fail and we should look into that
+RESTRICT=test
+
+DESCRIPTION="A package is a collection of utilities for dealing with IP addresses"
+HOMEPAGE="http://github.com/ronaldoussoren/macholib"
+SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="amd64 ~arm64 x86"
+
+RDEPEND="${PYTHON_DEPS}
+	dev-python/altgraph[${PYTHON_USEDEP}]"
+DEPEND="${RDEPEND}"

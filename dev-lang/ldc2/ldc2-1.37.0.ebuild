@@ -5,7 +5,7 @@ EAPI=8
 
 # Upstream supports LLVM 11.0 through 17.0.
 LLVM_COMPAT=( {15..17} )
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_{11..13} )
 inherit cmake llvm-r1 multilib-build multiprocessing python-any-r1 toolchain-funcs
 
 DESCRIPTION="LLVM D Compiler"
