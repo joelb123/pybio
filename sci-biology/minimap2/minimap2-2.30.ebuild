@@ -1,0 +1,36 @@
+# Copyright 2021-2024 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+DESCRIPTION="splice-aware sequence aligner with SSE2 and SSE4.1"
+HOMEPAGE="https://github.com/lh3/minimap2"
+SRC_URI="https://github.com/lh3/${PN}/releases/download/v${PV}/${P}.tar.bz2"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="~amd64 ~x86"
+IUSE="cpu_flags_x86_sse4_1"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
+DEPEND="sys-libs/zlib"
+RDEPEND="${DEPEND}"
+
+src_prepare(){
+	sed -e 's/-O2 //' -e 's/^CFLAGS=/CFLAGS+=/' -i Makefile || die
+	if ! use cpu_flags_x86_sse4_1; then
+		sed -i -e "/extra_compile_args.append('-msse4.1')/d" setup.py || die
+	fi
+	default
+}
+
+
+src_install() {
+	dobin "${PN}"
+	insinto /usr/include
+	doins minimap.h mmpriv.h
+	insinto /usr/share/"${PN}"/examples
+	doins example.c
+	doman minimap2.1
+	einstalldocs
+}
